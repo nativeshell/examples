@@ -49,7 +49,7 @@ pub(super) fn open_file_dialog<F>(
                         let url = NSArray::objectAtIndex(urls, 0);
                         let string: id = msg_send![url, absoluteString];
                         let path = from_nsstring(string);
-                        reply(path);
+                        reply(Some(path));
                         return;
                     }
                 }
