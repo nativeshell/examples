@@ -11,6 +11,9 @@
             "osx": {
                 "serviceInfoFile": "${env:TMPDIR}vmservice.nativeshell_examples",
             },
+            "windows": {
+                "serviceInfoFile": "${env:TEMP}/vmservice.nativeshell_examples"
+            }
         }
     ]
 }
