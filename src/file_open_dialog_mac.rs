@@ -5,10 +5,7 @@ pub use cocoa::{
     base::id,
     foundation::{NSArray, NSString, NSUInteger},
 };
-use nativeshell::{
-    codec::{MethodCallReply, Value},
-    shell::Context,
-};
+use nativeshell::shell::Context;
 pub use objc::{
     msg_send,
     rc::{autoreleasepool, StrongPtr},
@@ -28,12 +25,14 @@ fn from_nsstring(ns_string: id) -> String {
     }
 }
 
-pub(super) fn open_file_dialog(
+pub(super) fn open_file_dialog<F>(
     win: StrongPtr,
     _context: Rc<Context>,
     _request: FileOpenRequest,
-    reply: MethodCallReply<Value>,
-) {
+    reply: F,
+) where
+    F: FnOnce(Option<String>) + 'static,
+{
     autoreleasepool(|| unsafe {
         let panel = StrongPtr::retain(msg_send![class!(NSOpenPanel), openPanel]);
 
@@ -50,11 +49,11 @@ pub(super) fn open_file_dialog(
                         let url = NSArray::objectAtIndex(urls, 0);
                         let string: id = msg_send![url, absoluteString];
                         let path = from_nsstring(string);
-                        reply.send_ok(Value::String(path));
+                        reply(path);
                         return;
                     }
                 }
-                reply.send_ok(Value::Null);
+                reply(None);
             }
         };
 

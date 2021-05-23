@@ -5,20 +5,19 @@ mod bindings {
 use std::{mem::size_of, ptr::null_mut, rc::Rc};
 
 pub use bindings::Windows::Win32::{System::SystemServices::*, UI::WindowsAndMessaging::*};
-use nativeshell::{
-    codec::{MethodCallReply, Value},
-    shell::Context,
-};
+use nativeshell::shell::Context;
 pub use widestring::WideStr;
 
 use super::FileOpenRequest;
 
-pub(super) fn open_file_dialog(
+pub(super) fn open_file_dialog<F>(
     win: isize,
     context: Rc<Context>,
     _request: FileOpenRequest,
-    reply: MethodCallReply<Value>,
-) {
+    reply: F,
+) where
+    F: FnOnce(Option<String>) + 'static,
+{
     let cb = move || {
         let mut file = Vec::<u16>::new();
         file.resize(4096, 0);
@@ -54,7 +53,7 @@ pub(super) fn open_file_dialog(
             reply.send_ok(Value::Null);
         } else {
             let name = WideStr::from_slice(&file).to_string_lossy();
-            reply.send_ok(Value::String(name));
+            reply(name);
         }
     };
     context.run_loop.borrow().schedule_now(cb).detach();

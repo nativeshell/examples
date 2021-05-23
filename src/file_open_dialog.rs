@@ -1,25 +1,12 @@
-#[allow(unused)]
 use std::{
     cell::RefCell,
-    mem::size_of,
-    ptr::null_mut,
     rc::{Rc, Weak},
-    time::Duration,
 };
 
 pub use nativeshell::{
     codec::{value::from_value, MethodCall, MethodCallReply, Value},
     shell::{Context, WindowHandle},
 };
-
-#[cfg(target_os = "linux")]
-mod linux_imports {
-    pub use gtk::{prelude::DialogExtManual, DialogExt, FileChooserDialogBuilder};
-    pub use gtk::{FileChooserExt, GtkWindowExt};
-}
-
-#[cfg(target_os = "linux")]
-use linux_imports::*;
 
 pub struct FileOpenDialogService {
     context: Rc<Context>,
@@ -38,6 +25,10 @@ mod platform;
 
 #[cfg(target_os = "windows")]
 #[path = "file_open_dialog_win.rs"]
+mod platform;
+
+#[cfg(target_os = "linux")]
+#[path = "file_open_dialog_linux.rs"]
 mod platform;
 
 impl FileOpenDialogService {
@@ -70,7 +61,6 @@ impl FileOpenDialogService {
         match call.method.as_str() {
             "showFileOpenDialog" => {
                 let request: FileOpenRequest = from_value(&call.args).unwrap();
-
                 self.open_file_dialog(request, reply);
             }
             _ => {
@@ -79,7 +69,6 @@ impl FileOpenDialogService {
         }
     }
 
-    #[cfg(any(target_os = "macos", target_os = "windows"))]
     fn open_file_dialog(&self, request: FileOpenRequest, reply: MethodCallReply<Value>) {
         let win = self
             .context
@@ -87,51 +76,15 @@ impl FileOpenDialogService {
             .borrow()
             .get_platform_window(request.parent_window);
         if let Some(win) = win {
-            platform::open_file_dialog(win, self.context.clone(), request, reply);
+            platform::open_file_dialog(win, self.context.clone(), request, |name| {
+                let value = match name {
+                    Some(name) => Value::String(name),
+                    None => Value::Null,
+                };
+                reply.send(Ok(value));
+            });
         } else {
             reply.send_error("no_window", Some("Platform window not found"), Value::Null);
-        }
-    }
-
-    #[cfg(target_os = "linux")]
-    fn open_file_dialog(&self, request: FileOpenRequest, reply: MethodCallReply<Value>) {
-        let win = self
-            .context
-            .window_manager
-            .borrow()
-            .get_platform_window(request.parent_window);
-
-        if let Some(win) = win {
-            let dialog = FileChooserDialogBuilder::new()
-                .transient_for(&win)
-                .modal(true)
-                .action(gtk::FileChooserAction::Open)
-                .build();
-
-            dialog.add_buttons(&[
-                ("Open", gtk::ResponseType::Ok),
-                ("Cancel", gtk::ResponseType::Cancel),
-            ]);
-
-            // Platform messages will be processed while dialog is running so
-            // make sure it is cheduled on next run loop turn
-            self.context
-                .run_loop
-                .borrow()
-                .schedule_now(move || {
-                    let res = dialog.run();
-                    let res = match res {
-                        gtk::ResponseType::Ok => {
-                            let path = dialog.get_filename();
-                            path.map(|path| Value::String(path.to_string_lossy().into()))
-                                .unwrap_or_default()
-                        }
-                        _ => Value::Null,
-                    };
-                    dialog.close();
-                    reply.send(Ok(res));
-                })
-                .detach();
         }
     }
 }
