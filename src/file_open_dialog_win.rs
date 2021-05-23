@@ -50,10 +50,10 @@ pub(super) fn open_file_dialog<F>(
 
         let res = unsafe { GetOpenFileNameW(&mut ofn as *mut _) == TRUE };
         if !res {
-            reply.send_ok(Value::Null);
+            reply(None);
         } else {
             let name = WideStr::from_slice(&file).to_string_lossy();
-            reply(name);
+            reply(Some(name));
         }
     };
     context.run_loop.borrow().schedule_now(cb).detach();
