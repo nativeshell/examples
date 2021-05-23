@@ -1,11 +1,14 @@
-use std::cell::RefCell;
+use std::{cell::RefCell, rc::Rc};
 
 pub use block::ConcreteBlock;
 pub use cocoa::{
     base::id,
     foundation::{NSArray, NSString, NSUInteger},
 };
-use nativeshell::codec::{MethodCallReply, Value};
+use nativeshell::{
+    codec::{MethodCallReply, Value},
+    shell::Context,
+};
 pub use objc::{
     msg_send,
     rc::{autoreleasepool, StrongPtr},
@@ -27,6 +30,7 @@ fn from_nsstring(ns_string: id) -> String {
 
 pub(super) fn open_file_dialog(
     win: StrongPtr,
+    _context: Rc<Context>,
     _request: FileOpenRequest,
     reply: MethodCallReply<Value>,
 ) {

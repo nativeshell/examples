@@ -21,19 +21,6 @@ mod linux_imports {
 #[cfg(target_os = "linux")]
 use linux_imports::*;
 
-#[cfg(target_os = "windows")]
-mod win_imports {
-    mod bindings {
-        ::windows::include_bindings!();
-    }
-
-    pub use bindings::Windows::Win32::{System::SystemServices::*, UI::WindowsAndMessaging::*};
-    pub use widestring::WideStr;
-}
-
-#[cfg(target_os = "windows")]
-use win_imports::*;
-
 pub struct FileOpenDialogService {
     context: Rc<Context>,
     weak_self: RefCell<Weak<FileOpenDialogService>>,
@@ -47,6 +34,10 @@ struct FileOpenRequest {
 
 #[cfg(target_os = "macos")]
 #[path = "file_open_dialog_mac.rs"]
+mod platform;
+
+#[cfg(target_os = "windows")]
+#[path = "file_open_dialog_win.rs"]
 mod platform;
 
 impl FileOpenDialogService {
@@ -88,7 +79,7 @@ impl FileOpenDialogService {
         }
     }
 
-    #[cfg(target_os = "macos")]
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
     fn open_file_dialog(&self, request: FileOpenRequest, reply: MethodCallReply<Value>) {
         let win = self
             .context
@@ -96,60 +87,7 @@ impl FileOpenDialogService {
             .borrow()
             .get_platform_window(request.parent_window);
         if let Some(win) = win {
-            platform::open_file_dialog(win, request, reply);
-        } else {
-            reply.send_error("no_window", Some("Platform window not found"), Value::Null);
-        }
-    }
-
-    #[cfg(target_os = "windows")]
-    fn open_file_dialog(&self, request: FileOpenRequest, reply: MethodCallReply<Value>) {
-        let win = self
-            .context
-            .window_manager
-            .borrow()
-            .get_platform_window(request.parent_window);
-
-        if let Some(win) = win {
-            let cb = move || {
-                let mut file = Vec::<u16>::new();
-                file.resize(4096, 0);
-
-                let mut ofn = OPENFILENAMEW {
-                    lStructSize: size_of::<OPENFILENAMEW>() as u32,
-                    hwndOwner: HWND(win.0),
-                    hInstance: HINSTANCE(0),
-                    lpstrFilter: PWSTR::default(),
-                    lpstrCustomFilter: PWSTR::default(),
-                    nMaxCustFilter: 0,
-                    nFilterIndex: 0,
-                    lpstrFile: PWSTR(file.as_mut_ptr()),
-                    nMaxFile: file.len() as u32,
-                    lpstrFileTitle: PWSTR::default(),
-                    nMaxFileTitle: 0,
-                    lpstrInitialDir: PWSTR::default(),
-                    lpstrTitle: PWSTR::default(),
-                    Flags: OPEN_FILENAME_FLAGS(0),
-                    nFileOffset: 0,
-                    nFileExtension: 0,
-                    lpstrDefExt: PWSTR::default(),
-                    lCustData: LPARAM(0),
-                    lpfnHook: None,
-                    lpTemplateName: PWSTR::default(),
-                    pvReserved: null_mut(),
-                    dwReserved: 0,
-                    FlagsEx: OPEN_FILENAME_FLAGS_EX(0),
-                };
-
-                let res = unsafe { GetOpenFileNameW(&mut ofn as *mut _) == TRUE };
-                if !res {
-                    reply.send_ok(Value::Null);
-                } else {
-                    let name = WideStr::from_slice(&file).to_string_lossy();
-                    reply.send_ok(Value::String(name));
-                }
-            };
-            self.context.run_loop.borrow().schedule_now(cb).detach();
+            platform::open_file_dialog(win, self.context.clone(), request, reply);
         } else {
             reply.send_error("no_window", Some("Platform window not found"), Value::Null);
         }
