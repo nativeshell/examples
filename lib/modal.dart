@@ -2,49 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 
+import 'button.dart';
+import 'page.dart';
 import 'util.dart';
 
 class ModalWindowBuilder extends WindowBuilder {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      color: Colors.blueGrey.shade900,
-      child: Column(
-        // This is necessasry when using autoSizeWindow, as there are no
-        // incoming constraints from the window itself
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-              'This is a Modal Dialog. It is sized to fit.\n\nPick the result:'),
-          Container(
-            height: 10,
-            width: 0,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextButton(
-                onPressed: () {
-                  // Result can be anything serializable with StandardMethodCodec
-                  Window.of(context).closeWithResult(true);
-                },
-                child: Text('Yes'),
-              ),
-              Container(
-                width: 10,
-                height: 0,
-              ),
-              TextButton(
-                onPressed: () {
-                  Window.of(context).closeWithResult(false);
-                },
-                child: Text('No'),
-              ),
-            ],
-          ),
-          ExtraOptions(),
-        ],
+    return DefaultTextStyle.merge(
+      style: TextStyle(color: Colors.grey.shade900),
+      child: Container(
+        padding: EdgeInsets.all(24),
+        color: Colors.white,
+        child: Column(
+          // This is necessasry when using autoSizeWindow, as there are no
+          // incoming constraints from the window itself
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PageBlurb(paragraphs: [
+              'This is a Modal Dialog. It is sized to fit.',
+              'Pick the result:'
+            ]),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Button(
+                  onPressed: () {
+                    // Result can be anything serializable with StandardMethodCodec
+                    Window.of(context).closeWithResult(true);
+                  },
+                  child: Text('Yes'),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Button(
+                  onPressed: () {
+                    Window.of(context).closeWithResult(false);
+                  },
+                  child: Text('No'),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            ExtraOptions(),
+          ],
+        ),
       ),
     );
   }
@@ -95,18 +98,14 @@ class ExtraOptionsState extends State<ExtraOptions> {
                 : Text('Hide more options')),
         AnimatedVisibility(
             visible: extraOptionsVisible,
-            alignment: Alignment.center,
+            alignment: Alignment.topCenter,
             duration: Duration(milliseconds: 200),
             direction: Axis.vertical,
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blueAccent.shade700,
-                  primary: Colors.white,
-                ),
+              child: Button(
                 onPressed: () {
-                  Window.of(context).closeWithResult('maybe');
+                  Window.of(context).closeWithResult('Maybe');
                 },
                 child: Text('Maybe'),
               ),

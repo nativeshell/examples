@@ -1,81 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'package:nativeshell_examples/page.dart';
 
-class DragDropPage extends StatefulWidget {
-  const DragDropPage();
+class DragDropWindow extends WindowBuilder {
+  @override
+  Widget build(BuildContext context) {
+    return DragDropExample();
+  }
 
   @override
-  State<StatefulWidget> createState() {
-    return DragDropState();
+  Future<void> initializeWindow(
+      LocalWindow window, Size intrinsicContentSize) async {
+    await super.initializeWindow(window, intrinsicContentSize);
+    await window.setGeometry(Geometry(
+      minContentSize: intrinsicContentSize,
+    ));
+    final parent = window.parentWindow;
+    if (parent != null) {
+      // open this file right next to parent
+      final parentGeometry = await parent.getGeometry();
+      if (parentGeometry.frameSize != null &&
+          parentGeometry.frameOrigin != null) {
+        await window.setGeometry(Geometry(
+          frameOrigin: parentGeometry.frameOrigin!
+              .translate(parentGeometry.frameSize!.width + 20, 0),
+        ));
+      }
+    }
+  }
+
+  static DragDropWindow? fromInitData(dynamic initData) {
+    if (initData is Map && initData['class'] == 'dragDrop') {
+      return DragDropWindow();
+    }
+    return null;
+  }
+
+  static dynamic toInitData() => {
+        'class': 'dragDrop',
+      };
+}
+
+class DragDropExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: DragSource(
+                  title: 'Drag File Source',
+                  data: DragData([
+                    DragData.files([
+                      '/fictional/file/path_1.dart',
+                      '/fictional/file/path_2.dart',
+                    ]),
+                    customDragData({
+                      'key1': 'value1',
+                      'key2': '20',
+                    })
+                  ]),
+                ),
+              ),
+              Container(width: 20),
+              Expanded(
+                child: DragSource(
+                  title: 'Drag URL Source',
+                  data: DragData([
+                    DragData.uris([
+                      Uri.parse('https://google.com'),
+                    ]),
+                    customDragData({
+                      'key3': 'value3',
+                      'key4': '50',
+                    })
+                  ]),
+                ),
+              )
+            ],
+          ),
+          Container(height: 20),
+          Expanded(
+            child: DropTarget(),
+          )
+        ],
+      ),
+    );
   }
 }
 
 final customDragData = DragDataKey<Map>('custom-drag-data');
-
-class DragDropState extends State<DragDropPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        PageHeader(child: Text('Drag & Drop Example')),
-        PageSourceLocation(locations: [
-          'lib/drag_drop.dart',
-        ]),
-        PageBlurb(paragraphs: [
-          'Drag & drop suppors files, URIs, application specific data '
-              'and can be extended to support other platform specific formats.',
-        ]),
-        Expanded(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              IntrinsicWidth(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    DragSource(
-                      title: 'File Drag Source',
-                      data: DragData([
-                        DragData.files([
-                          '/fictional/file/path_1.dart',
-                          '/fictional/file/path_2.dart',
-                        ]),
-                        customDragData({
-                          'key1': 'value1',
-                          'key2': '20',
-                        })
-                      ]),
-                    ),
-                    SizedBox(height: 10),
-                    DragSource(
-                      title: 'URL Drag Source',
-                      data: DragData([
-                        DragData.uris([
-                          Uri.parse('https://google.com'),
-                        ]),
-                        customDragData({
-                          'key3': 'value3',
-                          'key4': '50',
-                        })
-                      ]),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(child: DropTarget())
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class DragSource extends StatelessWidget {
   final String title;
@@ -112,16 +130,13 @@ class DragSource extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          color: Colors.blueGrey.shade800,
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.lightBlueAccent,
           ),
         ),
-        child: DefaultTextStyle.merge(
-          style: TextStyle(fontSize: 13),
-          child: Center(child: Text(title)),
-        ),
+        child: Center(child: Text(title)),
       ),
     );
   }
@@ -136,10 +151,10 @@ class DropTarget extends StatefulWidget {
 
 class _DropTargetState extends State<DropTarget> {
   DragEffect pickEffect(Set<DragEffect> allowedEffects) {
-    if (allowedEffects.contains(DragEffect.Copy)) {
-      return DragEffect.Copy;
-    } else if (allowedEffects.contains(DragEffect.Link)) {
+    if (allowedEffects.contains(DragEffect.Link)) {
       return DragEffect.Link;
+    } else if (allowedEffects.contains(DragEffect.Copy)) {
+      return DragEffect.Copy;
     } else {
       return allowedEffects.isNotEmpty ? allowedEffects.first : DragEffect.None;
     }
@@ -177,9 +192,9 @@ class _DropTargetState extends State<DropTarget> {
       child: AnimatedContainer(
         decoration: BoxDecoration(
           color: dropping
-              ? Colors.amber.withAlpha(70)
+              ? Colors.amber.withAlpha(50)
               : Colors.amber.withAlpha(20),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.amber,
           ),
@@ -188,22 +203,19 @@ class _DropTargetState extends State<DropTarget> {
         padding: EdgeInsets.all(20),
         child: ClipRect(
           child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: 100),
-              child: dropping
-                  ? DefaultTextStyle.merge(
-                      style:
-                          TextStyle(fontSize: 13, color: Colors.grey.shade900),
-                      child: Text(_describeDragData()),
-                    )
-                  : Center(
-                      child: DefaultTextStyle.merge(
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                            color: Colors.amber.shade800),
-                        child: Text('Drop Target'),
-                      ),
-                    )),
+            constraints: BoxConstraints(minHeight: 200),
+            child: Wrap(
+              children: [
+                Text('Drop Area'),
+                if (_uris != null || _files != null || _customData != null) ...[
+                  Container(
+                    height: 20,
+                  ),
+                  if (dropping) Text(_describeDragData()),
+                ]
+              ],
+            ),
+          ),
         ),
       ),
     );

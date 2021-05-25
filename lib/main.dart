@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nativeshell/accelerators.dart';
 import 'package:nativeshell/nativeshell.dart';
+import 'package:nativeshell_examples/main_window.dart';
+import 'package:nativeshell_examples/platform_channels.dart';
 
-import 'drag_drop.dart';
+import 'drag_drop_old.dart';
 import 'modal.dart';
 import 'home.dart';
 import 'veil.dart';
@@ -35,11 +37,15 @@ class MyApp extends StatelessWidget {
 
                 // builder = MenuBarWindow();
 
+                builder ??=
+                    PlatformChannelsWindowBuilder.fromInitData(initData);
                 builder ??= ModalWindowBuilder.fromInitData(initData);
                 builder ??= DragDropWindow.fromInitData(initData);
                 builder ??= HomeWindow.fromInitData(initData);
                 builder ??= MenuBarWindow.fromInitData(initData);
-                builder ??= HomeWindow();
+
+                builder ??= MainWindowBuilder();
+                // builder ??= HomeWindow();
                 return builder;
               },
             ),

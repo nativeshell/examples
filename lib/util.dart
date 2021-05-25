@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -154,6 +156,54 @@ class _RenderAlign extends RenderPositionedBox {
     } else {
       size = constraints.constrain(Size(shrinkWrapWidth ? 0.0 : double.infinity,
           shrinkWrapHeight ? 0.0 : double.infinity));
+    }
+  }
+}
+
+//
+//
+//
+
+// LimitedBox that also limits intrinsic width
+class IntrinsicLimitedBox extends LimitedBox {
+  const IntrinsicLimitedBox({
+    Key? key,
+    double maxWidth = double.infinity,
+    double maxHeight = double.infinity,
+    Widget? child,
+  }) : super(key: key, maxWidth: maxWidth, maxHeight: maxWidth, child: child);
+
+  @override
+  RenderLimitedBox createRenderObject(BuildContext context) {
+    return RenderIntrinsicLimitedBox(
+      maxWidth: maxWidth,
+      maxHeight: maxHeight,
+    );
+  }
+}
+
+class RenderIntrinsicLimitedBox extends RenderLimitedBox {
+  RenderIntrinsicLimitedBox({
+    RenderBox? child,
+    double maxWidth = double.infinity,
+    double maxHeight = double.infinity,
+  }) : super(child: child, maxWidth: maxWidth, maxHeight: maxHeight);
+
+  @override
+  double computeMaxIntrinsicWidth(double height) {
+    return min(super.computeMaxIntrinsicWidth(height), maxWidth);
+  }
+}
+
+extension Intersperse<T> on Iterable<T> {
+  Iterable<T> intersperse(T element) sync* {
+    final iterator = this.iterator;
+    if (iterator.moveNext()) {
+      yield iterator.current;
+      while (iterator.moveNext()) {
+        yield element;
+        yield iterator.current;
+      }
     }
   }
 }
