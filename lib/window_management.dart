@@ -21,7 +21,6 @@ class WindowManagementPageState extends State<WindowManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PageHeader(child: Text('Window Management Example')),

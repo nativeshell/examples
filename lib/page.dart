@@ -14,11 +14,8 @@ class PageContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(25),
       color: Colors.grey.shade100,
-      child: DefaultTextStyle(
-          style: DefaultTextStyle.of(context)
-              .style
-              .copyWith(color: Colors.grey[900]),
-          child: child),
+      child: DefaultTextStyle.merge(
+          style: TextStyle(color: Colors.grey[900]), child: child),
     );
   }
 }

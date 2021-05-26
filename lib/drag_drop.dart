@@ -19,7 +19,6 @@ class DragDropState extends State<DragDropPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PageHeader(child: Text('Drag & Drop Example')),
@@ -51,7 +50,7 @@ class DragDropState extends State<DragDropPage> {
                         })
                       ]),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 15),
                     DragSource(
                       title: 'URL Drag Source',
                       data: DragData([
@@ -67,7 +66,7 @@ class DragDropState extends State<DragDropPage> {
                   ],
                 ),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 15),
               Expanded(child: DropTarget())
             ],
           ),

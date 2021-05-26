@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nativeshell/nativeshell.dart';
@@ -5,6 +7,7 @@ import 'package:nativeshell_examples/button.dart';
 import 'package:nativeshell_examples/window_management.dart';
 
 import 'drag_drop.dart';
+import 'menu.dart';
 import 'page.dart';
 import 'platform_channels.dart';
 
@@ -15,7 +18,11 @@ class MainWindowBuilder extends WindowBuilder {
   }
 
   @override
-  Future<void> initializeWindow(LocalWindow window, Size intrinsicContentSize) {
+  Future<void> initializeWindow(
+      LocalWindow window, Size intrinsicContentSize) async {
+    if (Platform.isMacOS) {
+      await Menu(_buildMenu).setAsAppMenu();
+    }
     return super.initializeWindow(window, intrinsicContentSize);
   }
 
@@ -27,6 +34,22 @@ class MainWindowBuilder extends WindowBuilder {
     ));
   }
 }
+
+// This will be the default "fallback" app menu used for any window that doesn't
+// have other menu
+List<MenuItem> _buildMenu() => [
+      MenuItem.children(title: 'App', children: [
+        MenuItem.withRole(role: MenuItemRole.hide),
+        MenuItem.withRole(role: MenuItemRole.hideOtherApplications),
+        MenuItem.withRole(role: MenuItemRole.showAll),
+        MenuItem.separator(),
+        MenuItem.withRole(role: MenuItemRole.quitApplication),
+      ]),
+      MenuItem.children(title: 'Window', role: MenuRole.window, children: [
+        MenuItem.withRole(role: MenuItemRole.minimizeWindow),
+        MenuItem.withRole(role: MenuItemRole.zoomWindow),
+      ]),
+    ];
 
 class Page {
   Page({
@@ -40,20 +63,29 @@ class Page {
 
 final pages = <Page>[
   Page(
-      title: 'Platform Channels',
-      builder: (BuildContext c) {
-        return PlatformChannelsPage();
-      }),
+    title: 'Platform Channels',
+    builder: (BuildContext c) {
+      return PlatformChannelsPage();
+    },
+  ),
   Page(
-      title: 'Window Management',
-      builder: (BuildContext c) {
-        return WindowManagementPage();
-      }),
+    title: 'Window Management',
+    builder: (BuildContext c) {
+      return WindowManagementPage();
+    },
+  ),
   Page(
-      title: 'Drag & Drop',
-      builder: (BuildContext c) {
-        return DragDropPage();
-      })
+    title: 'Drag & Drop',
+    builder: (BuildContext c) {
+      return DragDropPage();
+    },
+  ),
+  Page(
+    title: 'Menu & MenuBar',
+    builder: (BuildContext c) {
+      return MenuPage();
+    },
+  )
 ];
 
 class MainWindow extends StatefulWidget {
@@ -102,6 +134,7 @@ class MainWindowState extends State<MainWindow> {
                     });
                   },
                 ),
+                SizedBox(height: 20),
               ],
             ),
           ),

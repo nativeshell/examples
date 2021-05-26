@@ -24,7 +24,6 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PageHeader(child: Text('Platform Channels Example')),

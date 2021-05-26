@@ -75,9 +75,9 @@ class MenuBarWindow extends WindowBuilder {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: Colors.blueGrey,
-            child: MenuBar(menu: menu),
-          ),
+              color: Colors.blueGrey,
+              // child: MenuBar(menu: menu, itemBuilder: (,),
+              child: Container()),
           Expanded(
             child: Center(
               child: Material(
