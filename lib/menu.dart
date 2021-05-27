@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -22,10 +23,11 @@ class _MenuPageState extends State<MenuPage> {
         PageHeader(child: Text('Menu & MenuBar Example')),
         PageSourceLocation(locations: ['lib/menu.dart']),
         PageBlurb(paragraphs: [
-          'Nativeshell supports native context menus and menu bars.',
-          'MenuBar is a flutter component that opens into native submenus.'
+          'Nativeshell provides support for native context menus and a MenuBar widget, '
+              'which is a Flutter component that opens into native submenus.'
         ]),
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -35,7 +37,7 @@ class _MenuPageState extends State<MenuPage> {
                 children: [
                   MenuBar(
                     menu: menu,
-                    itemBuilder: _buildMenuItem,
+                    itemBuilder: _buildMenuBarItem,
                   ),
                   if (Platform.isMacOS)
                     Padding(
@@ -47,13 +49,57 @@ class _MenuPageState extends State<MenuPage> {
                 ],
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onSecondaryTapDown: _showContextMenu,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue.shade300),
+                  color: Colors.blue.shade100,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(38.0),
+                  child: Text('Right-click here for context menu'),
+                ),
+              ),
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildMenuItem(
+  int _counter = 0;
+
+  void _showContextMenu(TapDownDetails e) async {
+    final menu = Menu(_buildContextMenu);
+
+    // Menu can be updated while visible
+    final timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      ++_counter;
+      menu.update();
+    });
+
+    await Window.of(context).showPopupMenu(menu, e.globalPosition);
+
+    timer.cancel();
+  }
+
+  List<MenuItem> _buildContextMenu() => [
+        MenuItem(title: 'Context menu Item', action: () {}),
+        MenuItem(title: 'Menu Update Counter $_counter', action: null),
+        MenuItem.separator(),
+        ..._buildCheckAndRadioItems(),
+        MenuItem.separator(),
+        MenuItem.children(title: 'Submenu', children: [
+          MenuItem(title: 'Submenu Item 1', action: () {}),
+          MenuItem(title: 'Submenu Item 2', action: () {}),
+        ]),
+      ];
+
+  Widget _buildMenuBarItem(
       BuildContext context, Widget child, MenuItemState itemState) {
     Color background;
     Color foreground;
@@ -92,6 +138,10 @@ class _MenuPageState extends State<MenuPage> {
     menu = Menu(_buildMenu);
   }
 
+  bool check1 = true;
+  bool check2 = false;
+  int radioValue = 0;
+
   // This will be the default "fallback" app menu used for any window that doesn't
   // have other menu
   List<MenuItem> _buildMenu() => [
@@ -106,14 +156,78 @@ class _MenuPageState extends State<MenuPage> {
         MenuItem.children(title: '&File', children: [
           MenuItem(title: 'New', accelerator: cmdOrCtrl + 'N', action: () {}),
           MenuItem(title: 'Open', accelerator: cmdOrCtrl + 'O', action: () {}),
-          MenuItem(title: 'Save', accelerator: cmdOrCtrl + 'S', action: () {}),
-          MenuItem(title: 'Save As', action: () {}),
+          MenuItem.separator(),
+          MenuItem(title: 'Save', accelerator: cmdOrCtrl + 'S', action: null),
+          MenuItem(title: 'Save As', action: null),
+          MenuItem.separator(),
           MenuItem(title: 'Close', action: () {}),
+        ]),
+        MenuItem.children(title: '&Edit', children: [
+          MenuItem(title: 'Cut', accelerator: cmdOrCtrl + 'X', action: () {}),
+          MenuItem(title: 'Copy', accelerator: cmdOrCtrl + 'C', action: () {}),
+          MenuItem(title: 'Paste', accelerator: cmdOrCtrl + 'V', action: () {}),
+          MenuItem.separator(),
+          MenuItem(title: 'Find', accelerator: cmdOrCtrl + 'F', action: () {}),
+          MenuItem(title: 'Replace', action: () {}),
+        ]),
+        MenuItem.children(title: 'Another Menu', children: [
+          ..._buildCheckAndRadioItems(),
+          MenuItem.separator(),
+          MenuItem.children(title: 'Submenu', children: [
+            MenuItem(title: 'More of the same, I guess?', action: null),
+            MenuItem.separator(),
+            ..._buildCheckAndRadioItems(),
+          ]),
         ]),
         if (Platform.isMacOS)
           MenuItem.children(title: 'Window', role: MenuRole.window, children: [
             MenuItem.withRole(role: MenuItemRole.minimizeWindow),
             MenuItem.withRole(role: MenuItemRole.zoomWindow),
           ]),
+        MenuItem.children(title: '&Help', children: [
+          MenuItem(title: 'About', action: () {}),
+        ]),
+      ];
+
+  List<MenuItem> _buildCheckAndRadioItems() => [
+        MenuItem(
+            title: 'Checkable Item 1',
+            checkStatus: check1 ? CheckStatus.checkOn : CheckStatus.checkOff,
+            action: () {
+              check1 = !check1;
+              menu.update();
+            }),
+        MenuItem(
+            title: 'Checkable Item 2',
+            checkStatus: check2 ? CheckStatus.checkOn : CheckStatus.checkOff,
+            action: () {
+              check2 = !check2;
+              menu.update();
+            }),
+        MenuItem.separator(),
+        MenuItem(
+            title: 'Radio Item 1',
+            checkStatus:
+                radioValue == 0 ? CheckStatus.radioOn : CheckStatus.radioOff,
+            action: () {
+              radioValue = 0;
+              menu.update();
+            }),
+        MenuItem(
+            title: 'Radio Item 2',
+            checkStatus:
+                radioValue == 1 ? CheckStatus.radioOn : CheckStatus.radioOff,
+            action: () {
+              radioValue = 1;
+              menu.update();
+            }),
+        MenuItem(
+            title: 'Radio Item 3',
+            checkStatus:
+                radioValue == 2 ? CheckStatus.radioOn : CheckStatus.radioOff,
+            action: () {
+              radioValue = 2;
+              menu.update();
+            }),
       ];
 }
