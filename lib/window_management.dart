@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'package:nativeshell_examples/button.dart';
-import 'package:nativeshell_examples/page.dart';
+import 'button.dart';
+import 'page.dart';
 
 import 'modal.dart';
 import 'veil.dart';

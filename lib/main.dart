@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nativeshell/accelerators.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'package:nativeshell_examples/main_window.dart';
-import 'package:nativeshell_examples/platform_channels.dart';
+import 'main_window.dart';
+import 'platform_channels.dart';
 
 import 'drag_drop_old.dart';
 import 'modal.dart';

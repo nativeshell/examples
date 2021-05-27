@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'package:nativeshell_examples/button.dart';
-import 'package:nativeshell_examples/window_management.dart';
+import 'button.dart';
+import 'window_management.dart';
 
 import 'drag_drop.dart';
+import 'file_open_dialog.dart';
 import 'menu.dart';
 import 'page.dart';
 import 'platform_channels.dart';
@@ -85,7 +86,13 @@ final pages = <Page>[
     builder: (BuildContext c) {
       return MenuPage();
     },
-  )
+  ),
+  Page(
+    title: 'File Open Dialog',
+    builder: (BuildContext c) {
+      return FileOpenDialogPage();
+    },
+  ),
 ];
 
 class MainWindow extends StatefulWidget {
