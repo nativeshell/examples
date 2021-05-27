@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nativeshell/accelerators.dart';
 import 'package:nativeshell/nativeshell.dart';
 
-import 'page.dart';
+import '../widgets/page.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage();
@@ -21,7 +21,7 @@ class _MenuPageState extends State<MenuPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PageHeader(child: Text('Menu & MenuBar Example')),
-        PageSourceLocation(locations: ['lib/menu.dart']),
+        PageSourceLocation(locations: ['lib/pages/menu.dart']),
         PageBlurb(paragraphs: [
           'Nativeshell provides support for native context menus and a MenuBar widget, '
               'which is a Flutter component that opens into native submenus.'

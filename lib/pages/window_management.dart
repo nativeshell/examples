@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'button.dart';
-import 'page.dart';
+import '../widgets/button.dart';
+import '../widgets/page.dart';
 
-import 'modal.dart';
-import 'veil.dart';
+import 'modal_window.dart';
+import '../widgets/veil.dart';
 
 class WindowManagementPage extends StatefulWidget {
   const WindowManagementPage({Key? key}) : super(key: key);
@@ -24,8 +24,10 @@ class WindowManagementPageState extends State<WindowManagementPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PageHeader(child: Text('Window Management Example')),
-        PageSourceLocation(
-            locations: ['lib/window_management.dart', 'lib/modal_window.dart']),
+        PageSourceLocation(locations: [
+          'lib/pages/window_management.dart',
+          'lib/pages/modal_window.dart'
+        ]),
         PageBlurb(paragraphs: [
           'Nativeshell lets you create, show, hide, position windows, set their attributes and style. '
               'You can also show windows as modal dialogs (sheets on macOS).',

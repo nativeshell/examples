@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'page.dart';
+import '../widgets/page.dart';
 
 class DragDropPage extends StatefulWidget {
   const DragDropPage();
 
   @override
   State<StatefulWidget> createState() {
-    return DragDropState();
+    return DragDropPageState();
   }
 }
 
 final customDragData = DragDataKey<Map>('custom-drag-data');
 
-class DragDropState extends State<DragDropPage> {
+class DragDropPageState extends State<DragDropPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +23,7 @@ class DragDropState extends State<DragDropPage> {
       children: [
         PageHeader(child: Text('Drag & Drop Example')),
         PageSourceLocation(locations: [
-          'lib/drag_drop.dart',
+          'lib/pages/drag_drop.dart',
         ]),
         PageBlurb(paragraphs: [
           'Drag & drop suppors files, URIs, application specific data '

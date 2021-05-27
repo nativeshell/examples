@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'package:path/path.dart';
-import 'button.dart';
-import 'page.dart';
+import '../widgets/button.dart';
+import '../widgets/page.dart';
 
 final _channel = MethodChannel('file_open_dialog_channel');
 
@@ -38,7 +38,7 @@ class FileOpenDialogPageState extends State<StatefulWidget> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       PageHeader(child: Text('File Open Dialog Example')),
       PageSourceLocation(locations: [
-        'lib/file_open_dialog.dart',
+        'lib/pages/file_open_dialog.dart',
         'src/file_open_dialog.rs',
       ]),
       PageBlurb(paragraphs: [

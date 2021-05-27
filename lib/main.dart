@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:nativeshell/accelerators.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'main_window.dart';
-import 'platform_channels.dart';
 
-import 'drag_drop_old.dart';
-import 'modal.dart';
-import 'home.dart';
-import 'veil.dart';
-import 'menu_bar_window.dart';
+import 'pages/platform_channels.dart';
+import 'main_window.dart';
+import 'pages/modal_window.dart';
+import 'widgets/veil.dart';
 
 void main() async {
-  accelerators.register(cmdOrCtrl + shift + 'r', () {
-    print("BOO");
-  });
-
   runApp(MyApp());
 }
 
@@ -35,17 +27,11 @@ class MyApp extends StatelessWidget {
               builder: (initData) {
                 WindowBuilder? builder;
 
-                // builder = MenuBarWindow();
-
                 builder ??=
                     PlatformChannelsWindowBuilder.fromInitData(initData);
                 builder ??= ModalWindowBuilder.fromInitData(initData);
-                builder ??= DragDropWindow.fromInitData(initData);
-                builder ??= HomeWindow.fromInitData(initData);
-                builder ??= MenuBarWindow.fromInitData(initData);
-
                 builder ??= MainWindowBuilder();
-                // builder ??= HomeWindow();
+
                 return builder;
               },
             ),

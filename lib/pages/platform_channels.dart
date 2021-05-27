@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 
-import 'button.dart';
-import 'page.dart';
+import '../widgets/button.dart';
+import '../widgets/page.dart';
 
 final _channel = MethodChannel('example_channel');
 
@@ -28,7 +28,7 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
       children: [
         PageHeader(child: Text('Platform Channels Example')),
         PageSourceLocation(locations: [
-          'lib/platform_channels.dart',
+          'lib/pages/platform_channels.dart',
           'src/platform_channels.rs'
         ]),
         PageBlurb(paragraphs: [

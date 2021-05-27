@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 
-import 'button.dart';
-import 'page.dart';
-import 'util.dart';
+import '../widgets/animated_visibility.dart';
+import '../widgets/button.dart';
+import '../widgets/page.dart';
 
 class ModalWindowBuilder extends WindowBuilder {
   @override

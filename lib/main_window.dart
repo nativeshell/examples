@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nativeshell/nativeshell.dart';
-import 'button.dart';
-import 'window_management.dart';
+import 'widgets/button.dart';
+import 'pages/window_management.dart';
 
-import 'drag_drop.dart';
-import 'file_open_dialog.dart';
-import 'menu.dart';
-import 'page.dart';
-import 'platform_channels.dart';
+import 'pages/drag_drop.dart';
+import 'pages/file_open_dialog.dart';
+import 'pages/menu.dart';
+import 'widgets/page.dart';
+import 'pages/platform_channels.dart';
 
 class MainWindowBuilder extends WindowBuilder {
   @override
