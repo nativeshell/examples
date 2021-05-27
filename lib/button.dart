@@ -179,9 +179,7 @@ class AbstractButtonState<T extends AbstractButton> extends State<T>
           }
         },
         onExit: (PointerExitEvent e) {
-          // if pointer has left the widget while mouse grabbed, flutter generates
-          // exit event on release even if the pointer is back inside the widget
-          if (_hovered && !_isInside(e.position)) {
+          if (_hovered) {
             setState(() {
               _hovered = false;
             });
