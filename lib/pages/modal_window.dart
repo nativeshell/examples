@@ -9,6 +9,38 @@ import '../widgets/page.dart';
 class ModalWindowBuilder extends WindowBuilder {
   @override
   Widget build(BuildContext context) {
+    return ModalWindow();
+  }
+
+  static ModalWindowBuilder? fromInitData(dynamic initData) {
+    if (initData is Map && initData['class'] == 'modalWindow') {
+      return ModalWindowBuilder();
+    }
+    return null;
+  }
+
+  static dynamic toInitData() => {
+        'class': 'modalWindow',
+      };
+
+  @override
+  bool get autoSizeWindow => true;
+
+  @override
+  Future<void> initializeWindow(
+      LocalWindow window, Size intrinsicContentSize) async {
+    await window.setStyle(WindowStyle(canResize: false));
+    await window
+        .setGeometry(await centerInParent(window, intrinsicContentSize));
+    await window.show();
+  }
+}
+
+class ModalWindow extends StatelessWidget {
+  const ModalWindow();
+
+  @override
+  Widget build(BuildContext context) {
     return DefaultTextStyle.merge(
       style: TextStyle(color: Colors.grey.shade900),
       child: Container(
@@ -50,29 +82,6 @@ class ModalWindowBuilder extends WindowBuilder {
         ),
       ),
     );
-  }
-
-  static ModalWindowBuilder? fromInitData(dynamic initData) {
-    if (initData is Map && initData['class'] == 'modalWindow') {
-      return ModalWindowBuilder();
-    }
-    return null;
-  }
-
-  static dynamic toInitData() => {
-        'class': 'modalWindow',
-      };
-
-  @override
-  bool get autoSizeWindow => true;
-
-  @override
-  Future<void> initializeWindow(
-      LocalWindow window, Size intrinsicContentSize) async {
-    await window.setStyle(WindowStyle(canResize: false));
-    await window
-        .setGeometry(await centerInParent(window, intrinsicContentSize));
-    await window.show();
   }
 }
 

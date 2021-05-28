@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:nativeshell/nativeshell.dart';
 
+import 'pages/other_window.dart';
 import 'pages/platform_channels.dart';
 import 'main_window.dart';
 import 'pages/modal_window.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
                 builder ??=
                     PlatformChannelsWindowBuilder.fromInitData(initData);
                 builder ??= ModalWindowBuilder.fromInitData(initData);
+                builder ??= OtherWindowBuilder.fromInitData(initData);
                 builder ??= MainWindowBuilder();
 
                 return builder;
