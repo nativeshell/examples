@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'widgets/button.dart';
 import 'pages/window_management.dart';
@@ -121,15 +123,14 @@ class MainWindowState extends State<MainWindow> {
         IntrinsicWidth(
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.blueGrey[700],
-                border: Border(
-                    right: BorderSide(
-                        color: Colors.black.withOpacity(0.3), width: 2))),
+              color: Colors.blueGrey.shade600,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Header(),
+                SizedBox(height: 15),
                 PageSelector(
                   pages: pages,
                   selectedPage: selectedPage,
@@ -162,9 +163,49 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
-      child: Text('Nativeshell examples'),
-    );
+        color: Colors.black.withAlpha(120),
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            RichText(
+              text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontStyle: FontStyle.italic,
+                    shadows: [
+                      Shadow(
+                        color: Colors.white.withOpacity(0.7),
+                        blurRadius: 25,
+                      )
+                    ],
+                  ),
+                  children: [
+                    TextSpan(
+                        text: 'native',
+                        style: TextStyle(
+                          color: Colors.lightBlue.shade300,
+                        )),
+                    TextSpan(
+                        text: 'shell',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlue.shade100,
+                          // color: Colors.lightBlue.shade100
+                        )),
+                  ]),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'EXAMPLES',
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.8),
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.2,
+              ),
+            )
+          ],
+        ));
   }
 }
 
@@ -194,7 +235,7 @@ class PageSelectorButton extends AbstractButton {
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 150),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
         color: color,
         border: border,
