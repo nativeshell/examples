@@ -47,16 +47,19 @@ class WindowManagementPageState extends State<WindowManagementPage>
                   onPressed: showModalDialog,
                   child: Text('Show Modal Dialog'),
                 ),
-                Row(
-                  children: [
-                    if (modalWindowResult != null) ...[
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text('Received result: '),
-                      Text('$modalWindowResult')
-                    ]
-                  ],
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: Row(
+                    children: [
+                      if (modalWindowResult != null) ...[
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Received result: '),
+                        Text('$modalWindowResult')
+                      ]
+                    ],
+                  ),
                 ),
               ]),
               TableRow(children: [SizedBox(height: 10), Container()]),
