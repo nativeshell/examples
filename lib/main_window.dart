@@ -26,6 +26,7 @@ class MainWindowBuilder extends WindowBuilder {
     if (Platform.isMacOS) {
       await Menu(_buildMenu).setAsAppMenu();
     }
+    await window.setTitle('Nativeshell Examples');
     return super.initializeWindow(window, intrinsicContentSize);
   }
 
