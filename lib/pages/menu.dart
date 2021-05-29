@@ -23,7 +23,7 @@ class _MenuPageState extends State<MenuPage> {
         PageHeader(child: Text('Menu & MenuBar Example')),
         PageSourceLocation(locations: ['lib/pages/menu.dart']),
         PageBlurb(paragraphs: [
-          'Nativeshell provides support for native context menus and a MenuBar widget, '
+          'NativeShell provides support for native context menus and a MenuBar widget, '
               'which is a Flutter component that opens into native submenus.'
         ]),
         Column(

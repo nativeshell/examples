@@ -19,7 +19,7 @@ fn main() {
     env_logger::builder().format_timestamp(None).init();
 
     let context = Context::new(ContextOptions {
-        app_namespace: "NativeshellDemo".into(),
+        app_namespace: "NativeShellDemo".into(),
         ..Default::default()
     });
 

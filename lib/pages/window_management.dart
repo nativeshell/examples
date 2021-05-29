@@ -31,7 +31,7 @@ class WindowManagementPageState extends State<WindowManagementPage>
           'lib/pages/modal_window.dart'
         ]),
         PageBlurb(paragraphs: [
-          'Nativeshell lets you create, show, hide, position windows, set their attributes and style. '
+          'NativeShell lets you create, show, hide, position windows, set their attributes and style. '
               'You can also show windows as modal dialogs (sheets on macOS).',
           'Windows can track content size, or be resizable with automatic minimum size, like this window.'
         ]),

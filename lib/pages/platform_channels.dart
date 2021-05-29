@@ -32,7 +32,7 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
           'src/platform_channels.rs'
         ]),
         PageBlurb(paragraphs: [
-          'Nativeshell provides consistent platform agnostic API to register platform channel handlers.',
+          'NativeShell provides consistent platform agnostic API to register platform channel handlers.',
           'You only need to register handler once and it can be called from any isolate (window).'
         ]),
         Table(
