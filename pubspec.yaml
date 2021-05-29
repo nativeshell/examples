@@ -30,7 +30,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   nativeshell:
-    path: ../nativeshell/nativeshell
+    path: ../nativeshell/nativeshell_dart
 
 dev_dependencies:
   flutter_test:
