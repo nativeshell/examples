@@ -3,14 +3,14 @@ use nativeshell::{
     codec::Value,
     shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
 };
-use platform_channel::register_example_channel;
+use platform_channels::register_example_channel;
 
 #[cfg(target_os = "macos")]
 #[macro_use]
 extern crate objc;
 
 mod file_open_dialog;
-mod platform_channel;
+mod platform_channels;
 
 fn main() {
     exec_bundle();
