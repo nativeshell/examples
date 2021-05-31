@@ -9,13 +9,6 @@ class OtherWindowBuilder extends WindowBuilder {
     return OtherWindow();
   }
 
-  static OtherWindowBuilder? fromInitData(dynamic initData) {
-    if (initData is Map && initData['class'] == 'otherWindow') {
-      return OtherWindowBuilder();
-    }
-    return null;
-  }
-
   @override
   Future<void> initializeWindow(
       LocalWindow window, Size intrinsicContentSize) async {
@@ -41,6 +34,13 @@ class OtherWindowBuilder extends WindowBuilder {
   static dynamic toInitData() => {
         'class': 'otherWindow',
       };
+
+  static OtherWindowBuilder? fromInitData(dynamic initData) {
+    if (initData is Map && initData['class'] == 'otherWindow') {
+      return OtherWindowBuilder();
+    }
+    return null;
+  }
 }
 
 class OtherWindow extends StatefulWidget {
