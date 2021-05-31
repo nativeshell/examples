@@ -5,9 +5,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
+
 import 'widgets/button.dart';
 import 'pages/window_management.dart';
-
 import 'pages/drag_drop.dart';
 import 'pages/file_open_dialog.dart';
 import 'pages/menu.dart';
