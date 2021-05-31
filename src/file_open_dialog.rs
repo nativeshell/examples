@@ -34,7 +34,7 @@ mod platform;
 impl FileOpenDialogService {
     pub fn new(context: Rc<Context>) -> Rc<Self> {
         let res = Rc::new(Self {
-            context: context.clone(),
+            context,
             weak_self: RefCell::new(Default::default()),
         });
         *res.weak_self.borrow_mut() = Rc::downgrade(&res);
