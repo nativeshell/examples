@@ -95,7 +95,7 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
   void onHello() async {
     final reply = await _channel.invokeMethod('echo', 'Hello');
     setState(() {
-      WindowContext.of(context).requestUpdateConstraints();
+      WindowState.of(context).requestUpdateConstraints();
       helloReply = reply;
     });
   }
@@ -109,16 +109,16 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
     setState(() {
       backgroundTaskInProgress = false;
       backgroundTaskReply = reply;
-      WindowContext.of(context).requestUpdateConstraints();
+      WindowState.of(context).requestUpdateConstraints();
     });
   }
 
   void onOpenWindow() async {
-    await Window.create(PlatformChannelsWindowContext.toInitData());
+    await Window.create(PlatformChannelsWindowState.toInitData());
   }
 }
 
-class PlatformChannelsWindowContext extends WindowContext {
+class PlatformChannelsWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
     return PageContainer(
@@ -143,9 +143,9 @@ class PlatformChannelsWindowContext extends WindowContext {
         'class': 'platformChannelsWindow',
       };
 
-  static PlatformChannelsWindowContext? fromInitData(dynamic initData) {
+  static PlatformChannelsWindowState? fromInitData(dynamic initData) {
     if (initData is Map && initData['class'] == 'platformChannelsWindow') {
-      return PlatformChannelsWindowContext();
+      return PlatformChannelsWindowState();
     }
     return null;
   }

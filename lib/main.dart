@@ -25,16 +25,15 @@ class MyApp extends StatelessWidget {
           child: Container(
             color: Color.fromARGB(255, 30, 30, 35),
             child: WindowWidget(
-              contextProvider: (initData) {
-                WindowContext? builder;
+              onCreateState: (initData) {
+                WindowState? state;
 
-                builder ??=
-                    PlatformChannelsWindowContext.fromInitData(initData);
-                builder ??= ModalWindowContext.fromInitData(initData);
-                builder ??= OtherWindowContext.fromInitData(initData);
-                builder ??= MainWindowContext();
+                state ??= PlatformChannelsWindowState.fromInitData(initData);
+                state ??= ModalWindowState.fromInitData(initData);
+                state ??= OtherWindowState.fromInitData(initData);
+                state ??= MainWindowState();
 
-                return builder;
+                return state;
               },
             ),
           ),

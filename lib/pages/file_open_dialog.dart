@@ -72,7 +72,7 @@ class FileOpenDialogPageState extends State<StatefulWidget> {
     final file = await showFileOpenDialog(request);
     setState(() {
       _selectedFileName = file != null ? basename(file) : null;
-      WindowContext.of(context).requestUpdateConstraints();
+      WindowState.of(context).requestUpdateConstraints();
     });
   }
 

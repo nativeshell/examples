@@ -14,7 +14,7 @@ import 'pages/menu.dart';
 import 'widgets/page.dart';
 import 'pages/platform_channels.dart';
 
-class MainWindowContext extends WindowContext {
+class MainWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
     return MainWindow();
@@ -94,11 +94,11 @@ class MainWindow extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return MainWindowState();
+    return _MainWindowState();
   }
 }
 
-class MainWindowState extends State<MainWindow> {
+class _MainWindowState extends State<MainWindow> {
   @override
   void initState() {
     super.initState();
@@ -129,7 +129,7 @@ class MainWindowState extends State<MainWindow> {
                   onSelected: (Page page) {
                     setState(() {
                       // update window min size and resize window if necessary
-                      WindowContext.of(context).requestUpdateConstraints();
+                      WindowState.of(context).requestUpdateConstraints();
                       selectedPage = page;
                     });
                   },

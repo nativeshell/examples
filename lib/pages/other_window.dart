@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'package:nativeshell_examples/widgets/button.dart';
 
-class OtherWindowContext extends WindowContext {
+class OtherWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
     return OtherWindow();
@@ -34,9 +34,9 @@ class OtherWindowContext extends WindowContext {
         'class': 'otherWindow',
       };
 
-  static OtherWindowContext? fromInitData(dynamic initData) {
+  static OtherWindowState? fromInitData(dynamic initData) {
     if (initData is Map && initData['class'] == 'otherWindow') {
-      return OtherWindowContext();
+      return OtherWindowState();
     }
     return null;
   }

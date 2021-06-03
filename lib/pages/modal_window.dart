@@ -6,15 +6,15 @@ import '../widgets/animated_visibility.dart';
 import '../widgets/button.dart';
 import '../widgets/page.dart';
 
-class ModalWindowContext extends WindowContext {
+class ModalWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
     return ModalWindow();
   }
 
-  static ModalWindowContext? fromInitData(dynamic initData) {
+  static ModalWindowState? fromInitData(dynamic initData) {
     if (initData is Map && initData['class'] == 'modalWindow') {
-      return ModalWindowContext();
+      return ModalWindowState();
     }
     return null;
   }
