@@ -27,11 +27,9 @@ class ModalWindowBuilder extends WindowBuilder {
   bool get autoSizeWindow => true;
 
   @override
-  Future<void> initializeWindow(
-      LocalWindow window, Size intrinsicContentSize) async {
+  Future<void> initializeWindow(Size intrinsicContentSize) async {
     await window.setStyle(WindowStyle(canResize: false));
-    await window
-        .setGeometry(await centerInParent(window, intrinsicContentSize));
+    await window.setGeometry(await centerInParent(intrinsicContentSize));
     await window.show();
   }
 }

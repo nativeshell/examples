@@ -10,8 +10,7 @@ class OtherWindowBuilder extends WindowBuilder {
   }
 
   @override
-  Future<void> initializeWindow(
-      LocalWindow window, Size intrinsicContentSize) async {
+  Future<void> initializeWindow(Size intrinsicContentSize) async {
     // If possible, show the window to the right of parent window
     Offset? origin;
     final parentGeometry = await window.parentWindow?.getGeometry();

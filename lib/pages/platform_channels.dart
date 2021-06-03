@@ -127,14 +127,13 @@ class PlatformChannelsWindowBuilder extends WindowBuilder {
   }
 
   @override
-  Future<void> initializeWindow(
-      LocalWindow win, Size intrinsicContentSize) async {
-    await win.setStyle(WindowStyle(canResize: false));
-    final geometry = await centerInParent(win, intrinsicContentSize);
+  Future<void> initializeWindow(Size intrinsicContentSize) async {
+    await window.setStyle(WindowStyle(canResize: false));
+    final geometry = await centerInParent(intrinsicContentSize);
     // translate the window slightly. it may have same size as parent window
     // so centering it looks weird
-    await win.setGeometry(geometry.translate(20, 20));
-    await win.show();
+    await window.setGeometry(geometry.translate(20, 20));
+    await window.show();
   }
 
   @override

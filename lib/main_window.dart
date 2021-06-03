@@ -21,21 +21,12 @@ class MainWindowBuilder extends WindowBuilder {
   }
 
   @override
-  Future<void> initializeWindow(
-      LocalWindow window, Size intrinsicContentSize) async {
+  Future<void> initializeWindow(Size intrinsicContentSize) async {
     if (Platform.isMacOS) {
       await Menu(_buildMenu).setAsAppMenu();
     }
     await window.setTitle('NativeShell Examples');
-    return super.initializeWindow(window, intrinsicContentSize);
-  }
-
-  @override
-  Future<void> updateWindowConstraints(
-      LocalWindow window, Size intrinsicContentSize) async {
-    await window.setGeometry(Geometry(
-      minContentSize: intrinsicContentSize,
-    ));
+    return super.initializeWindow(intrinsicContentSize);
   }
 }
 
