@@ -14,7 +14,7 @@ import 'pages/menu.dart';
 import 'widgets/page.dart';
 import 'pages/platform_channels.dart';
 
-class MainWindowBuilder extends WindowBuilder {
+class MainWindowContext extends WindowContext {
   @override
   Widget build(BuildContext context) {
     return MainWindow();

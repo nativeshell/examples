@@ -6,15 +6,15 @@ import '../widgets/animated_visibility.dart';
 import '../widgets/button.dart';
 import '../widgets/page.dart';
 
-class ModalWindowBuilder extends WindowBuilder {
+class ModalWindowContext extends WindowContext {
   @override
   Widget build(BuildContext context) {
     return ModalWindow();
   }
 
-  static ModalWindowBuilder? fromInitData(dynamic initData) {
+  static ModalWindowContext? fromInitData(dynamic initData) {
     if (initData is Map && initData['class'] == 'modalWindow') {
-      return ModalWindowBuilder();
+      return ModalWindowContext();
     }
     return null;
   }
@@ -45,7 +45,7 @@ class ModalWindow extends StatelessWidget {
         padding: EdgeInsets.all(24),
         color: Colors.white,
         child: Column(
-          // This is necessasry when using autoSizeWindow, as there are no
+          // This is necessary when using autoSizeWindow, as there are no
           // incoming constraints from the window itself
           mainAxisSize: MainAxisSize.min,
           children: [

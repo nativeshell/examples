@@ -104,7 +104,7 @@ class WindowManagementPageState extends State<WindowManagementPage>
   void showOtherWindow() async {
     // use veil to prevent double events while waiting for window to initialize
     await Veil.show(context, () async {
-      final window = await Window.create(OtherWindowBuilder.toInitData());
+      final window = await Window.create(OtherWindowContext.toInitData());
       setState(() {
         otherWindow = window;
       });
@@ -169,7 +169,7 @@ class WindowManagementPageState extends State<WindowManagementPage>
 
   void showModalDialog() async {
     final res = await Veil.show(context, () async {
-      final win = await Window.create(ModalWindowBuilder.toInitData());
+      final win = await Window.create(ModalWindowContext.toInitData());
       return await win.showModal();
     });
     setState(() {

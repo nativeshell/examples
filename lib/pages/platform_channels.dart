@@ -114,11 +114,11 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
   }
 
   void onOpenWindow() async {
-    await Window.create(PlatformChannelsWindowBuilder.toInitData());
+    await Window.create(PlatformChannelsWindowContext.toInitData());
   }
 }
 
-class PlatformChannelsWindowBuilder extends WindowBuilder {
+class PlatformChannelsWindowContext extends WindowContext {
   @override
   Widget build(BuildContext context) {
     return PageContainer(
@@ -143,9 +143,9 @@ class PlatformChannelsWindowBuilder extends WindowBuilder {
         'class': 'platformChannelsWindow',
       };
 
-  static PlatformChannelsWindowBuilder? fromInitData(dynamic initData) {
+  static PlatformChannelsWindowContext? fromInitData(dynamic initData) {
     if (initData is Map && initData['class'] == 'platformChannelsWindow') {
-      return PlatformChannelsWindowBuilder();
+      return PlatformChannelsWindowContext();
     }
     return null;
   }
