@@ -767,9 +767,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05e67477af7cb51a2969e0b3af21eac0a11b7db788391e287f057ae8043cc81a"
+checksum = "e90a5a446bd0d01a2f12b3f9c72b2835b3828391c222b0126576e5a844450965"
 dependencies = [
  "block",
  "byte-slice-cast",
