@@ -12,6 +12,8 @@ extern crate objc;
 mod file_open_dialog;
 mod platform_channels;
 
+nativeshell::include_flutter_plugins!();
+
 fn main() {
     exec_bundle();
     register_observatory_listener("nativeshell_examples".into());
@@ -20,6 +22,7 @@ fn main() {
 
     let context = Context::new(ContextOptions {
         app_namespace: "NativeShellDemo".into(),
+        flutter_plugins: flutter_get_plugins(),
         ..Default::default()
     });
 

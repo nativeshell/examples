@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
+import 'package:nativeshell_examples/pages/flutter_plugins.dart';
 
 import 'widgets/button.dart';
 import 'pages/window_management.dart';
@@ -85,6 +86,12 @@ final pages = <Page>[
     title: 'File Open Dialog',
     builder: (BuildContext c) {
       return FileOpenDialogPage();
+    },
+  ),
+  Page(
+    title: 'Flutter Plugins',
+    builder: (BuildContext c) {
+      return FlutterPluginsPage();
     },
   ),
 ];
