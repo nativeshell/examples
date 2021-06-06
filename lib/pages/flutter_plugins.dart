@@ -54,13 +54,22 @@ class FlutterPluginsPageState extends State<FlutterPluginsPage> {
     doStuff();
   }
 
+  Future<String> _packageName() async {
+    try {
+      // FFI call fails on windows
+      return (await PackageInfo.fromPlatform()).packageName;
+    } on Exception {
+      return 'Failed to retrieve';
+    }
+  }
+
   void doStuff() async {
-    final docDir = await getApplicationDocumentsDirectory();
-    final info = await PackageInfo.fromPlatform();
+    final documentsDirectory = await getApplicationDocumentsDirectory();
+    final packageName = await _packageName();
 
     setState(() {
-      documentsDirectory = docDir.path;
-      packageName = info.packageName;
+      this.documentsDirectory = documentsDirectory.path;
+      this.packageName = packageName;
       WindowState.of(context).requestUpdateConstraints();
     });
   }
