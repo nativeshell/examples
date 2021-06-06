@@ -57,7 +57,8 @@ class FlutterPluginsPageState extends State<FlutterPluginsPage> {
   Future<String> _packageName() async {
     try {
       // FFI call fails on windows
-      return (await PackageInfo.fromPlatform()).packageName;
+      final name = (await PackageInfo.fromPlatform()).packageName;
+      return name.isNotEmpty ? name : 'Unknown';
     } on Exception {
       return 'Failed to retrieve';
     }
