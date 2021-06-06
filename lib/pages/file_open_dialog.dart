@@ -32,7 +32,7 @@ class FileOpenDialogPage extends StatefulWidget {
   }
 }
 
-class FileOpenDialogPageState extends State<StatefulWidget> {
+class FileOpenDialogPageState extends State<FileOpenDialogPage> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -43,7 +43,7 @@ class FileOpenDialogPageState extends State<StatefulWidget> {
       ]),
       PageBlurb(paragraphs: [
         'This is an example of showing native platform dialog to select files. In '
-            'future this should be provided directly by nativeshell itself'
+            'future this should be provided directly by nativeshell itself.'
       ]),
       Row(
         children: [
@@ -51,7 +51,7 @@ class FileOpenDialogPageState extends State<StatefulWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Button(
-                onPressed: () {
+                onPressed: () async {
                   _selectFile(context);
                 },
                 child: Text('Select File...'),
