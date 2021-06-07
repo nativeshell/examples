@@ -15,8 +15,8 @@
                 "serviceInfoFile": "${env:TEMP}/vmservice.nativeshell_examples"
             },
             "linux": {
-                "serviceInfoFile": "${XDG_RUNTIME_DIR}/vmservice.nativeshell_examples"
+                "serviceInfoFile": "${env:XDG_RUNTIME_DIR}/vmservice.nativeshell_examples"
             }
-        }
+        },
     ]
 }
