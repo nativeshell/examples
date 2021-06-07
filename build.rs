@@ -22,7 +22,7 @@ fn build_flutter() -> BuildResult<()> {
 
 fn main() {
     if let Err(error) = build_flutter() {
-        println!("Build failed with error:\n{}", error);
+        println!("\n** Build failed with error **\n\n{}", error);
         panic!();
     }
 
