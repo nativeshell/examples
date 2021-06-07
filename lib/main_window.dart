@@ -135,8 +135,6 @@ class _MainWindowState extends State<MainWindow> {
                   selectedPage: selectedPage,
                   onSelected: (Page page) {
                     setState(() {
-                      // update window min size and resize window if necessary
-                      WindowState.of(context).requestUpdateConstraints();
                       selectedPage = page;
                     });
                   },

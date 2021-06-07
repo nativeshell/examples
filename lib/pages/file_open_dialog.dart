@@ -72,7 +72,6 @@ class FileOpenDialogPageState extends State<FileOpenDialogPage> {
     final file = await showFileOpenDialog(request);
     setState(() {
       _selectedFileName = file != null ? basename(file) : null;
-      WindowState.of(context).requestUpdateConstraints();
     });
   }
 

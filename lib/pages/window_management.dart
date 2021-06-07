@@ -152,12 +152,6 @@ class WindowManagementPageState extends State<WindowManagementPage>
   }
 
   @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-    WindowState.of(context).requestUpdateConstraints();
-  }
-
-  @override
   void dispose() {
     otherWindow?.close();
     super.dispose();

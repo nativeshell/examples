@@ -28,7 +28,7 @@ class OtherWindowState extends WindowState {
   }
 
   @override
-  bool get autoSizeWindow => true;
+  WindowSizingMode get windowSizingMode => WindowSizingMode.sizeToContents;
 
   static dynamic toInitData() => {
         'class': 'otherWindow',

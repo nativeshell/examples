@@ -24,7 +24,7 @@ class ModalWindowState extends WindowState {
       };
 
   @override
-  bool get autoSizeWindow => true;
+  WindowSizingMode get windowSizingMode => WindowSizingMode.sizeToContents;
 
   @override
   Future<void> initializeWindow(Size intrinsicContentSize) async {

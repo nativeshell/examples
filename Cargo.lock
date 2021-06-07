@@ -844,9 +844,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell_build"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "79948eaa7dd5e5fcf5d7ee934e8a053f68a172786b2ed17a70cc827267db67a5"
+checksum = "103072e939d3585dc9f06d07d9a66d04d40605915994931cb50fe6932147e87c"
 dependencies = [
  "cargo-emit",
  "cmake",

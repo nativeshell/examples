@@ -71,7 +71,6 @@ class FlutterPluginsPageState extends State<FlutterPluginsPage> {
     setState(() {
       this.documentsDirectory = documentsDirectory.path;
       this.packageName = packageName;
-      WindowState.of(context).requestUpdateConstraints();
     });
   }
 

@@ -95,7 +95,6 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
   void onHello() async {
     final reply = await _channel.invokeMethod('echo', 'Hello');
     setState(() {
-      WindowState.of(context).requestUpdateConstraints();
       helloReply = reply;
     });
   }
@@ -109,7 +108,6 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
     setState(() {
       backgroundTaskInProgress = false;
       backgroundTaskReply = reply;
-      WindowState.of(context).requestUpdateConstraints();
     });
   }
 
@@ -137,7 +135,7 @@ class PlatformChannelsWindowState extends WindowState {
   }
 
   @override
-  bool get autoSizeWindow => true;
+  WindowSizingMode get windowSizingMode => WindowSizingMode.sizeToContents;
 
   static dynamic toInitData() => {
         'class': 'platformChannelsWindow',
