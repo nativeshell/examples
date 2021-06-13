@@ -839,7 +839,7 @@ dependencies = [
  "utf16_lit",
  "velcro",
  "widestring",
- "windows 0.11.0",
+ "windows",
 ]
 
 [[package]]
@@ -875,7 +875,7 @@ dependencies = [
  "objc",
  "serde",
  "widestring",
- "windows 0.10.0",
+ "windows",
 ]
 
 [[package]]
@@ -1390,31 +1390,14 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "windows"
-version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a43e544233e20425d5a58e9671cf76d6aed9e6f211508c050facb29b188dc10f"
-dependencies = [
- "const-sha1",
- "windows_gen 0.10.0",
- "windows_macros 0.10.0",
-]
-
-[[package]]
-name = "windows"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "25b270ca3fa1282aa091f122551348f8186f07888dffdfe64df17206ad3b56d0"
 dependencies = [
  "const-sha1",
- "windows_gen 0.11.0",
- "windows_macros 0.11.0",
+ "windows_gen",
+ "windows_macros",
 ]
-
-[[package]]
-name = "windows_gen"
-version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc6283570a39b3594e31c64a498f48058758cc063eb087d972bb6476ad134a16"
 
 [[package]]
 name = "windows_gen"
@@ -1424,22 +1407,12 @@ checksum = "44bd40154eb69ba3c80f11752494a2a34d1b448b06b80449238edfbd00ec7eef"
 
 [[package]]
 name = "windows_macros"
-version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f757e7665f81f33ace9f89b0f0fc3a7c770e24ff4fa1475c6503bb35b4524893"
-dependencies = [
- "syn",
- "windows_gen 0.10.0",
-]
-
-[[package]]
-name = "windows_macros"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bae6942e04aa5792bbf3b3cf5ded1b7590a7ffd76d53ea179210b87911b6587f"
 dependencies = [
  "syn",
- "windows_gen 0.11.0",
+ "windows_gen",
 ]
 
 [[package]]
