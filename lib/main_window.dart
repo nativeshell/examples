@@ -22,6 +22,10 @@ class MainWindowState extends WindowState {
   }
 
   @override
+  WindowSizingMode get windowSizingMode =>
+      WindowSizingMode.atLeastIntrinsicSize;
+
+  @override
   Future<void> initializeWindow(Size intrinsicContentSize) async {
     if (Platform.isMacOS) {
       await Menu(_buildMenu).setAsAppMenu();

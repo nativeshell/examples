@@ -800,9 +800,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "85da80fa47317efe96cbef7bbf54d973aab4be41843ebb8287b29cb831e8b3f3"
+checksum = "cd0e20e0f698c80271e5ba18a546740a3405124fd1d9fc8f19964d1bb61b80f3"
 dependencies = [
  "block",
  "byte-slice-cast",
@@ -839,14 +839,14 @@ dependencies = [
  "utf16_lit",
  "velcro",
  "widestring",
- "windows",
+ "windows 0.11.0",
 ]
 
 [[package]]
 name = "nativeshell_build"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4938b68684c370c03443a8a5289821581f22e5b0b1c1d6a28a15a82987886d68"
+checksum = "338f81f4409bb8204d15ef6b26bccef87345a464ebc9620cca06728201744f9a"
 dependencies = [
  "cargo-emit",
  "cmake",
@@ -875,7 +875,7 @@ dependencies = [
  "objc",
  "serde",
  "widestring",
- "windows",
+ "windows 0.10.0",
 ]
 
 [[package]]
@@ -1395,8 +1395,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a43e544233e20425d5a58e9671cf76d6aed9e6f211508c050facb29b188dc10f"
 dependencies = [
  "const-sha1",
- "windows_gen",
- "windows_macros",
+ "windows_gen 0.10.0",
+ "windows_macros 0.10.0",
+]
+
+[[package]]
+name = "windows"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25b270ca3fa1282aa091f122551348f8186f07888dffdfe64df17206ad3b56d0"
+dependencies = [
+ "const-sha1",
+ "windows_gen 0.11.0",
+ "windows_macros 0.11.0",
 ]
 
 [[package]]
@@ -1406,13 +1417,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bc6283570a39b3594e31c64a498f48058758cc063eb087d972bb6476ad134a16"
 
 [[package]]
+name = "windows_gen"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "44bd40154eb69ba3c80f11752494a2a34d1b448b06b80449238edfbd00ec7eef"
+
+[[package]]
 name = "windows_macros"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f757e7665f81f33ace9f89b0f0fc3a7c770e24ff4fa1475c6503bb35b4524893"
 dependencies = [
  "syn",
- "windows_gen",
+ "windows_gen 0.10.0",
+]
+
+[[package]]
+name = "windows_macros"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bae6942e04aa5792bbf3b3cf5ded1b7590a7ffd76d53ea179210b87911b6587f"
+dependencies = [
+ "syn",
+ "windows_gen 0.11.0",
 ]
 
 [[package]]
