@@ -4,7 +4,7 @@ mod bindings {
 
 use std::{mem::size_of, ptr::null_mut, rc::Rc};
 
-pub use bindings::Windows::Win32::{System::SystemServices::*, UI::WindowsAndMessaging::*};
+pub use bindings::Windows::Win32::{Foundation::*, UI::WindowsAndMessaging::*};
 use nativeshell::shell::Context;
 pub use widestring::WideStr;
 
@@ -48,7 +48,7 @@ pub(super) fn open_file_dialog<F>(
             FlagsEx: OPEN_FILENAME_FLAGS_EX(0),
         };
 
-        let res = unsafe { GetOpenFileNameW(&mut ofn as *mut _) == TRUE };
+        let res = unsafe { GetOpenFileNameW(&mut ofn as *mut _).as_bool() };
         if !res {
             reply(None);
         } else {
