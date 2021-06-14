@@ -1,9 +1,9 @@
-use file_open_dialog::FileOpenDialogService;
+use file_open_dialog::FileOpenDialog;
 use nativeshell::{
     codec::Value,
     shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
 };
-use platform_channels::register_example_channel;
+use platform_channels::PlatformChannels;
 
 #[cfg(target_os = "macos")]
 #[macro_use]
@@ -28,9 +28,8 @@ fn main() {
 
     let context = context.unwrap();
 
-    let _file_open_dialog = FileOpenDialogService::new(context.clone());
-
-    register_example_channel(context.clone());
+    let _file_open_dialog = FileOpenDialog::new(context.clone()).register();
+    let _platform_channels = PlatformChannels::new(context.clone()).register();
 
     context
         .window_manager
