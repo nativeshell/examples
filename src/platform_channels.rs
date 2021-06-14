@@ -56,4 +56,8 @@ impl MethodCallHandler for PlatformChannels {
             _ => {}
         }
     }
+
+    // optionally you can get notifications when an engine gets destroyed, which
+    // might be useful for clean-up
+    fn on_engine_destroyed(&mut self, _engine: EngineHandle) {}
 }
