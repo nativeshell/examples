@@ -29,12 +29,12 @@ pub struct FileOpenDialog {
 }
 
 impl FileOpenDialog {
-    pub fn create_channel(context: Rc<Context>) -> MethodChannel {
-        MethodChannel::new(
-            context.clone(),
-            "file_open_dialog_channel",
-            FileOpenDialog { context },
-        )
+    pub fn new(context: Rc<Context>) -> Self {
+        Self { context }
+    }
+
+    pub fn register(self) -> MethodChannel {
+        MethodChannel::new(self.context.clone(), "file_open_dialog_channel", self)
     }
 
     fn open_file_dialog(&self, request: FileOpenRequest, reply: MethodCallReply<Value>) {

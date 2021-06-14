@@ -2,24 +2,21 @@ use std::{rc::Rc, thread, time::Duration};
 
 use nativeshell::{
     codec::{MethodCall, MethodCallReply, Value},
-    shell::{Context, EngineHandle, MethodCallHandler, MethodChannel, RunLoopSender},
+    shell::{Context, EngineHandle, MethodCallHandler, MethodChannel},
     util::Capsule,
 };
 
 pub struct PlatformChannels {
-    // sender is used to schedule responde on main thread
-    sender: RunLoopSender,
+    context: Rc<Context>,
 }
 
 impl PlatformChannels {
-    pub fn create_channel(context: Rc<Context>) -> MethodChannel {
-        MethodChannel::new(
-            context.clone(),
-            "example_channel",
-            PlatformChannels {
-                sender: context.run_loop.borrow_mut().new_sender(),
-            },
-        )
+    pub fn new(context: Rc<Context>) -> Self {
+        Self { context }
+    }
+
+    pub fn register(self) -> MethodChannel {
+        MethodChannel::new(self.context.clone(), "example_channel", self)
     }
 }
 
@@ -39,7 +36,7 @@ impl MethodCallHandler for PlatformChannels {
                 // use capsule to move it between threads
                 let mut reply = Capsule::new(reply);
 
-                let sender = self.sender.clone();
+                let sender = self.context.run_loop.borrow().new_sender();
                 thread::spawn(move || {
                     // simulate long running task on background thread
                     thread::sleep(Duration::from_secs(1));

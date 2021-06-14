@@ -28,8 +28,8 @@ fn main() {
 
     let context = context.unwrap();
 
-    let _file_open_dialog = FileOpenDialog::create_channel(context.clone());
-    let _platform_channels = PlatformChannels::create_channel(context.clone());
+    let _file_open_dialog = FileOpenDialog::new(context.clone()).register();
+    let _platform_channels = PlatformChannels::new(context.clone()).register();
 
     context
         .window_manager
