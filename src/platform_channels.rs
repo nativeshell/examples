@@ -2,7 +2,7 @@ use std::{rc::Rc, thread, time::Duration};
 
 use nativeshell::{
     codec::{MethodCall, MethodCallReply, Value},
-    shell::{Context, EngineHandle, MethodCallHandler, Plugin, RunLoopSender},
+    shell::{Context, EngineHandle, MethodCallHandler, MethodChannel, RunLoopSender},
     util::Capsule,
 };
 
@@ -12,8 +12,8 @@ pub struct PlatformChannels {
 }
 
 impl PlatformChannels {
-    pub fn create_plugin(context: Rc<Context>) -> Plugin {
-        Plugin::new(
+    pub fn create_channel(context: Rc<Context>) -> MethodChannel {
+        MethodChannel::new(
             context.clone(),
             "example_channel",
             PlatformChannels {

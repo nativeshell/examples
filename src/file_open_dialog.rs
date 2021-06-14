@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use nativeshell::shell::{MethodCallHandler, Plugin};
+use nativeshell::shell::{MethodCallHandler, MethodChannel};
 pub use nativeshell::{
     codec::{value::from_value, MethodCall, MethodCallReply, Value},
     shell::{Context, WindowHandle},
@@ -29,8 +29,8 @@ pub struct FileOpenDialog {
 }
 
 impl FileOpenDialog {
-    pub fn create_plugin(context: Rc<Context>) -> Plugin {
-        Plugin::new(
+    pub fn create_channel(context: Rc<Context>) -> MethodChannel {
+        MethodChannel::new(
             context.clone(),
             "file_open_dialog_channel",
             FileOpenDialog { context },
