@@ -15,6 +15,10 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  _MenuPageState() {
+    _lazyMenu = Menu(_buildLazyMenuItems, onOpen: _onLazyMenuOpen);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,6 +80,8 @@ class _MenuPageState extends State<MenuPage> {
   void _showContextMenu(TapDownDetails e) async {
     final menu = Menu(_buildContextMenu);
 
+    _lazyMenuLoaded = false;
+
     // Menu can be updated while visible
     final timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       ++_counter;
@@ -93,9 +99,12 @@ class _MenuPageState extends State<MenuPage> {
         MenuItem.separator(),
         ..._buildCheckAndRadioItems(),
         MenuItem.separator(),
+        MenuItem.menu(title: 'Lazy Submenu', submenu: _lazyMenu),
+        MenuItem.separator(),
         MenuItem.children(title: 'Submenu', children: [
           MenuItem(title: 'Submenu Item 1', action: () {}),
           MenuItem(title: 'Submenu Item 2', action: () {}),
+          MenuItem(title: 'Submenu Update Counter $_counter', action: null),
         ]),
       ];
 
@@ -141,6 +150,27 @@ class _MenuPageState extends State<MenuPage> {
   bool check1 = true;
   bool check2 = false;
   int radioValue = 0;
+
+  late Menu _lazyMenu;
+  bool _lazyMenuLoaded = false;
+
+  List<MenuItem> _buildLazyMenuItems() => _lazyMenuLoaded
+      ? [
+          MenuItem(title: 'Lazy Item 1', action: () {}),
+          MenuItem(title: 'Lazy Item 2', action: () {}),
+          MenuItem(title: 'Lazy Item 3', action: () {}),
+          MenuItem(title: 'Lazy Item 4', action: () {}),
+          MenuItem(title: 'Lazy Counter $_counter', action: null),
+        ]
+      : [
+          MenuItem(title: 'Loading...', action: null),
+        ];
+
+  void _onLazyMenuOpen() async {
+    await Future.delayed(Duration(seconds: 1));
+    _lazyMenuLoaded = true;
+    _lazyMenu.update();
+  }
 
   // This will be the default "fallback" app menu used for any window that doesn't
   // have other menu
