@@ -76,6 +76,9 @@ class _MenuPageState extends State<MenuPage> {
   void _showContextMenu(TapDownDetails e) async {
     final menu = Menu(_buildContextMenu);
 
+    // Show the Loading... item every time context menu is displayed
+    _lazyMenuLoaded = false;
+
     // Menu can be updated while visible
     final timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       ++_counter;
@@ -87,9 +90,33 @@ class _MenuPageState extends State<MenuPage> {
     timer.cancel();
   }
 
+  //
+  // Context Menu
+  //
+
+  late Menu _lazyMenu; // created in initState, used in _buildContextMenu
+  bool _lazyMenuLoaded = false;
+
+  List<MenuItem> _buildLazyMenuItems() => !_lazyMenuLoaded
+      ? [
+          MenuItem(title: 'Loading...', action: null),
+        ]
+      : [
+          MenuItem(title: 'Menu items can be', action: () {}),
+          MenuItem(title: 'loaded on demand.', action: () {}),
+          MenuItem.separator(),
+          MenuItem(title: 'Counter $_counter', action: null),
+        ];
+
+  void _onLazyMenuOpen() async {
+    await Future.delayed(Duration(seconds: 1));
+    _lazyMenuLoaded = true;
+    _lazyMenu.update();
+  }
+
   List<MenuItem> _buildContextMenu() => [
-        MenuItem(title: 'Context menu Item', action: () {}),
-        MenuItem(title: 'Menu Update Counter $_counter', action: null),
+        MenuItem(title: 'A Context Menu Item', action: () {}),
+        MenuItem(title: 'Update Counter $_counter', action: null),
         MenuItem.separator(),
         ..._buildCheckAndRadioItems(),
         MenuItem.separator(),
@@ -97,7 +124,13 @@ class _MenuPageState extends State<MenuPage> {
           MenuItem(title: 'Submenu Item 1', action: () {}),
           MenuItem(title: 'Submenu Item 2', action: () {}),
         ]),
+        MenuItem.separator(),
+        MenuItem.menu(title: 'Lazy Loaded Submenu', submenu: _lazyMenu),
       ];
+
+  //
+  // MenuBar
+  //
 
   Widget _buildMenuBarItem(
       BuildContext context, Widget child, MenuItemState itemState) {
@@ -132,18 +165,23 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   late Menu menu;
+
   @override
   void initState() {
     super.initState();
+
+    // MenuBar menu
     menu = Menu(_buildMenu);
+
+    // Lazily loaded sub-menu used in context menu
+    _lazyMenu = Menu(_buildLazyMenuItems, onOpen: _onLazyMenuOpen);
   }
 
   bool check1 = true;
   bool check2 = false;
   int radioValue = 0;
 
-  // This will be the default "fallback" app menu used for any window that doesn't
-  // have other menu
+  // MenuBar items
   List<MenuItem> _buildMenu() => [
         if (Platform.isMacOS)
           MenuItem.children(title: 'App', children: [
@@ -189,6 +227,7 @@ class _MenuPageState extends State<MenuPage> {
         ]),
       ];
 
+  // Used in both MenuBar and ContextMenu
   List<MenuItem> _buildCheckAndRadioItems() => [
         MenuItem(
             title: 'Checkable Item 1',
