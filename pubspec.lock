@@ -127,7 +127,7 @@ packages:
       name: nativeshell
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.6"
+    version: "0.1.7"
   package_info_plus:
     dependency: "direct main"
     description:
