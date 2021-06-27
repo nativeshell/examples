@@ -2,7 +2,7 @@ mod bindings {
     ::windows::include_bindings!();
 }
 
-use std::{mem::size_of, ptr::null_mut, rc::Rc};
+use std::{mem::size_of, ptr::null_mut};
 
 pub use bindings::Windows::Win32::{Foundation::*, UI::WindowsAndMessaging::*};
 use nativeshell::shell::ContextRef;
