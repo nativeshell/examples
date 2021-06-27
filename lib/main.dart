@@ -9,6 +9,9 @@ import 'pages/modal_window.dart';
 import 'widgets/veil.dart';
 
 void main() async {
+  // Disable shader warmup - it delays producing first frame, which we want to
+  // produce as soon as possible to reduce time to open new windows.
+  disableShaderWarmUp();
   runApp(MyApp());
 }
 
