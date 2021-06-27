@@ -1,18 +1,14 @@
-use std::rc::Rc;
-
 use gtk::{
     prelude::DialogExtManual, DialogExt, FileChooserDialogBuilder, FileChooserExt, GtkWindowExt,
     Window,
 };
-use nativeshell::{
-    shell::Context,
-};
+use nativeshell::shell::ContextRef;
 
 use super::FileOpenRequest;
 
 pub(super) fn open_file_dialog<F>(
     win: Window,
-    context: Rc<Context>,
+    context: &ContextRef,
     _request: FileOpenRequest,
     reply: F,
 ) where

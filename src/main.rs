@@ -28,13 +28,14 @@ fn main() {
 
     let context = context.unwrap();
 
-    let _file_open_dialog = FileOpenDialog::new(context.clone()).register();
-    let _platform_channels = PlatformChannels::new(context.clone()).register();
+    let _file_open_dialog = FileOpenDialog::new(context.weak()).register();
+    let _platform_channels = PlatformChannels::new(context.weak()).register();
 
     context
         .window_manager
         .borrow_mut()
-        .create_window(Value::Null, None);
+        .create_window(Value::Null, None)
+        .unwrap();
 
     context.run_loop.borrow().run();
 }

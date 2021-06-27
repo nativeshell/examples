@@ -1,5 +1,3 @@
-use std::rc::Rc;
-
 use nativeshell::shell::{MethodCallHandler, MethodChannel};
 pub use nativeshell::{
     codec::{value::from_value, MethodCall, MethodCallReply, Value},
@@ -25,11 +23,11 @@ mod platform;
 mod platform;
 
 pub struct FileOpenDialog {
-    context: Rc<Context>,
+    context: Context,
 }
 
 impl FileOpenDialog {
-    pub fn new(context: Rc<Context>) -> Self {
+    pub fn new(context: Context) -> Self {
         Self { context }
     }
 
@@ -38,21 +36,22 @@ impl FileOpenDialog {
     }
 
     fn open_file_dialog(&self, request: FileOpenRequest, reply: MethodCallReply<Value>) {
-        let win = self
-            .context
-            .window_manager
-            .borrow()
-            .get_platform_window(request.parent_window);
-        if let Some(win) = win {
-            platform::open_file_dialog(win, self.context.clone(), request, |name| {
-                let value = match name {
-                    Some(name) => Value::String(name),
-                    None => Value::Null,
-                };
-                reply.send(Ok(value));
-            });
-        } else {
-            reply.send_error("no_window", Some("Platform window not found"), Value::Null);
+        if let Some(context) = self.context.get() {
+            let win = context
+                .window_manager
+                .borrow()
+                .get_platform_window(request.parent_window);
+            if let Some(win) = win {
+                platform::open_file_dialog(win, &context, request, |name| {
+                    let value = match name {
+                        Some(name) => Value::String(name),
+                        None => Value::Null,
+                    };
+                    reply.send(Ok(value));
+                });
+            } else {
+                reply.send_error("no_window", Some("Platform window not found"), Value::Null);
+            }
         }
     }
 }

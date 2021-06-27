@@ -30,7 +30,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   nativeshell:
-    version: ^0.1.7
+    version: ^0.1.8
   url_launcher: ^6.0.6
   path_provider: ^2.0.2
   package_info_plus: ^1.0.1

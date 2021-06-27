@@ -1,11 +1,11 @@
-use std::{cell::RefCell, rc::Rc};
+use std::cell::RefCell;
 
 pub use block::ConcreteBlock;
 pub use cocoa::{
     base::id,
     foundation::{NSArray, NSString, NSUInteger},
 };
-use nativeshell::shell::Context;
+use nativeshell::shell::ContextRef;
 pub use objc::{
     msg_send,
     rc::{autoreleasepool, StrongPtr},
@@ -27,7 +27,7 @@ fn from_nsstring(ns_string: id) -> String {
 
 pub(super) fn open_file_dialog<F>(
     win: StrongPtr,
-    _context: Rc<Context>,
+    _context: &ContextRef,
     _request: FileOpenRequest,
     reply: F,
 ) where
