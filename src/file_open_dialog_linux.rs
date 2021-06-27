@@ -1,5 +1,3 @@
-use std::rc::Rc;
-
 use gtk::{
     prelude::DialogExtManual, DialogExt, FileChooserDialogBuilder, FileChooserExt, GtkWindowExt,
     Window,
