@@ -5,14 +5,14 @@ mod bindings {
 use std::{mem::size_of, ptr::null_mut, rc::Rc};
 
 pub use bindings::Windows::Win32::{Foundation::*, UI::WindowsAndMessaging::*};
-use nativeshell::shell::Context;
+use nativeshell::shell::ContextRef;
 pub use widestring::WideStr;
 
 use super::FileOpenRequest;
 
 pub(super) fn open_file_dialog<F>(
     win: isize,
-    context: Rc<Context>,
+    context: &ContextRef,
     _request: FileOpenRequest,
     reply: F,
 ) where
@@ -56,5 +56,6 @@ pub(super) fn open_file_dialog<F>(
             reply(Some(name));
         }
     };
+
     context.run_loop.borrow().schedule_now(cb).detach();
 }

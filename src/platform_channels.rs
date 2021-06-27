@@ -1,4 +1,4 @@
-use std::{rc::Rc, thread, time::Duration};
+use std::{thread, time::Duration};
 
 use nativeshell::{
     codec::{MethodCall, MethodCallReply, Value},
@@ -7,11 +7,11 @@ use nativeshell::{
 };
 
 pub struct PlatformChannels {
-    context: Rc<Context>,
+    context: Context,
 }
 
 impl PlatformChannels {
-    pub fn new(context: Rc<Context>) -> Self {
+    pub fn new(context: Context) -> Self {
         Self { context }
     }
 
@@ -36,10 +36,10 @@ impl MethodCallHandler for PlatformChannels {
                 // use capsule to move it between threads
                 let mut reply = Capsule::new(reply);
 
-                let sender = self.context.run_loop.borrow().new_sender();
+                let sender = self.context.get().unwrap().run_loop.borrow().new_sender();
                 thread::spawn(move || {
                     // simulate long running task on background thread
-                    thread::sleep(Duration::from_secs(1));
+                    thread::sleep(Duration::from_secs(4));
                     let value = 3.141592;
                     // jump back to platform thread to send the reply
                     sender.send(move || {
