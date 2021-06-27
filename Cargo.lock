@@ -11,9 +11,9 @@ dependencies = [
 
 [[package]]
 name = "anyhow"
-version = "1.0.40"
+version = "1.0.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "28b2cd92db5cbd74e8e5028f7e27dd7aa3090e89e4f2a197cc7c8dfb69c7063b"
+checksum = "15af2628f6890fe2609a3b91bef4c83450512802e59489f9c1cb1fa5df064a61"
 
 [[package]]
 name = "atk"
@@ -800,9 +800,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell"
-version = "0.1.6"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "454ff25aadc38b6a563bb0b252f973bc53a1e263db9dae6968132c4363c57edd"
+checksum = "1cdb99522b0f95878a26fa91d94544bbeb2d80d66cfa59f6e1b2545289b12642"
 dependencies = [
  "block",
  "byte-slice-cast",
@@ -844,9 +844,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell_build"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "338f81f4409bb8204d15ef6b26bccef87345a464ebc9620cca06728201744f9a"
+checksum = "23bd5d015121ffdfce6c44e7a1fafc914349d5ac6c9d4d94f63ea2aa6b5e1514"
 dependencies = [
  "cargo-emit",
  "cmake",
@@ -1390,9 +1390,9 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "windows"
-version = "0.11.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "25b270ca3fa1282aa091f122551348f8186f07888dffdfe64df17206ad3b56d0"
+checksum = "d21e80c408bb5609db1c24323a942d34bc573178b5ab2d386b981bd3ed07122d"
 dependencies = [
  "const-sha1",
  "windows_gen",
@@ -1401,15 +1401,15 @@ dependencies = [
 
 [[package]]
 name = "windows_gen"
-version = "0.11.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44bd40154eb69ba3c80f11752494a2a34d1b448b06b80449238edfbd00ec7eef"
+checksum = "6471156e3821094bf99528667c498b36eb58a092b187e9a03324d72744cf3646"
 
 [[package]]
 name = "windows_macros"
-version = "0.11.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bae6942e04aa5792bbf3b3cf5ded1b7590a7ffd76d53ea179210b87911b6587f"
+checksum = "12cd9926fdba87226d95e0ec872736934f9df405cede2ca546e307e0d5d4b973"
 dependencies = [
  "syn",
  "windows_gen",
