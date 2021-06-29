@@ -1,6 +1,6 @@
 use gtk::{
-    prelude::DialogExtManual, DialogExt, FileChooserDialogBuilder, FileChooserExt, GtkWindowExt,
-    Window,
+    prelude::{DialogExt, DialogExtManual, FileChooserExt, GtkWindowExt},
+    FileChooserDialogBuilder, Window,
 };
 use nativeshell::shell::ContextRef;
 
@@ -34,7 +34,7 @@ pub(super) fn open_file_dialog<F>(
             let res = dialog.run();
             let res = match res {
                 gtk::ResponseType::Ok => {
-                    let path = dialog.get_filename();
+                    let path = dialog.filename();
                     path.map(|p| p.to_string_lossy().into())
                 }
                 _ => None::<String>,
