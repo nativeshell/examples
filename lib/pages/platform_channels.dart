@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 
+import '../main.dart';
 import '../widgets/button.dart';
 import '../widgets/page.dart';
 
@@ -119,8 +120,10 @@ class _PlatformChannelsPageState extends State<PlatformChannelsPage> {
 class PlatformChannelsWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return PageContainer(
-      child: IntrinsicWidth(child: PlatformChannelsPage()),
+    return ExamplesWindow(
+      child: PageContainer(
+        child: IntrinsicWidth(child: PlatformChannelsPage()),
+      ),
     );
   }
 

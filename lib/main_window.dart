@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'package:nativeshell_examples/pages/flutter_plugins.dart';
 
+import 'main.dart';
 import 'widgets/button.dart';
 import 'pages/window_management.dart';
 import 'pages/drag_drop.dart';
@@ -18,7 +19,7 @@ import 'pages/platform_channels.dart';
 class MainWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return MainWindow();
+    return ExamplesWindow(child: MainWindow());
   }
 
   @override

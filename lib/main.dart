@@ -12,34 +12,46 @@ void main() async {
   // Disable shader warmup - it delays producing first frame, which we want to
   // produce as soon as possible to reduce time to open new windows.
   disableShaderWarmUp();
-  runApp(MyApp());
+  runApp(Main());
 }
 
-class MyApp extends StatelessWidget {
+// Common scaffold code used by each window
+class ExamplesWindow extends StatelessWidget {
+  const ExamplesWindow({Key? key, required this.child}) : super(key: key);
+
+  final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Veil(
-        child: DefaultTextStyle(
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-          ),
-          child: Container(
-            color: Color.fromARGB(255, 30, 30, 35),
-            child: WindowWidget(
-              onCreateState: (initData) {
-                WindowState? state;
+      home: DefaultTextStyle(
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+        ),
+        child: WindowLayoutProbe(child: child),
+      ),
+    );
+  }
+}
 
-                state ??= PlatformChannelsWindowState.fromInitData(initData);
-                state ??= ModalWindowState.fromInitData(initData);
-                state ??= OtherWindowState.fromInitData(initData);
-                state ??= MainWindowState();
+class Main extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Veil(
+      child: Container(
+        color: Color.fromARGB(255, 30, 30, 35),
+        child: WindowWidget(
+          onCreateState: (initData) {
+            WindowState? state;
 
-                return state;
-              },
-            ),
-          ),
+            state ??= PlatformChannelsWindowState.fromInitData(initData);
+            state ??= ModalWindowState.fromInitData(initData);
+            state ??= OtherWindowState.fromInitData(initData);
+            state ??= MainWindowState();
+
+            return state;
+          },
         ),
       ),
     );

@@ -3,10 +3,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:nativeshell/nativeshell.dart';
 import 'package:nativeshell_examples/widgets/button.dart';
 
+import '../main.dart';
+
 class OtherWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return OtherWindow();
+    return ExamplesWindow(child: OtherWindow());
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 
+import '../main.dart';
 import '../widgets/animated_visibility.dart';
 import '../widgets/button.dart';
 import '../widgets/page.dart';
@@ -9,7 +10,7 @@ import '../widgets/page.dart';
 class ModalWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return ModalWindow();
+    return ExamplesWindow(child: ModalWindow());
   }
 
   static ModalWindowState? fromInitData(dynamic initData) {
