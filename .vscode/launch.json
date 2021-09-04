@@ -9,12 +9,15 @@
             "type": "dart",
             "request": "attach",
             "osx": {
+                "deviceId": "macos",
                 "serviceInfoFile": "${env:TMPDIR}vmservice.nativeshell_examples",
             },
             "windows": {
+                "deviceId": "windows",
                 "serviceInfoFile": "${env:TEMP}/vmservice.nativeshell_examples"
             },
             "linux": {
+                "deviceId": "linux",
                 "serviceInfoFile": "${env:XDG_RUNTIME_DIR}/vmservice.nativeshell_examples"
             }
         },
