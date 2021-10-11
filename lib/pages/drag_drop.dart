@@ -87,7 +87,7 @@ class DragSource extends StatelessWidget {
     final session = await DragSession.beginWithContext(
         context: context,
         data: data,
-        allowedEffects: [DragEffect.Copy, DragEffect.Link, DragEffect.Move]);
+        allowedEffects: {DragEffect.Copy, DragEffect.Link, DragEffect.Move});
     final res = await session.waitForResult();
     print('Drop result: $res');
   }
