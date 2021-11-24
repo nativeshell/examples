@@ -25,14 +25,4 @@ fn main() {
         println!("\n** Build failed with error **\n\n{}", error);
         panic!();
     }
-
-    // Windows symbols used for file_open_dialog example
-    #[cfg(target_os = "windows")]
-    {
-        windows::build!(
-            Windows::Win32::UI::WindowsAndMessaging::{
-                GetOpenFileNameW,
-            }
-        )
-    }
 }

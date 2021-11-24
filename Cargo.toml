@@ -11,7 +11,7 @@ cargo-emit = "0.2.1"
 nativeshell_build = { version = "0.1.10" }
 
 [dependencies]
-nativeshell = { version = "0.1.11" }
+nativeshell = { version = "0.1.12" }
 env_logger = "0.9.0"
 serde = { version = "1.0.119", features = ["derive"] }
 
@@ -21,11 +21,13 @@ objc = "0.2.7"
 block = "0.1.6"
 
 [target.'cfg(target_os = "windows")'.dependencies]
-windows = "0.21.1"
-widestring = "0.4.3"
+widestring = "0.5.1"
 
-[target.'cfg(target_os = "windows")'.build-dependencies]
-windows = "0.21.1"
+[target.'cfg(target_os = "windows")'.dependencies.windows]
+version = "0.28.0"
+features = [
+    "Win32_UI_Controls_Dialogs"
+]
 
 [target.'cfg(target_os = "linux")'.dependencies]
 gtk = "0.14.0"
