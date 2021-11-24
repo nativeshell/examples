@@ -1,12 +1,13 @@
-mod bindings {
-    ::windows::include_bindings!();
-}
-
 use std::{mem::size_of, ptr::null_mut};
 
-pub use bindings::Windows::Win32::{Foundation::*, UI::WindowsAndMessaging::*};
 use nativeshell::shell::ContextRef;
 pub use widestring::WideStr;
+use windows::Win32::{
+    Foundation::{HINSTANCE, HWND, LPARAM, PWSTR},
+    UI::Controls::Dialogs::{
+        GetOpenFileNameW, OPENFILENAMEW, OPEN_FILENAME_FLAGS, OPEN_FILENAME_FLAGS_EX,
+    },
+};
 
 use super::FileOpenRequest;
 
