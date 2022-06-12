@@ -1,35 +1,32 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:nativeshell/nativeshell.dart';
+import 'package:nativeshell/nativeshell.dart' as nshell;
 import 'package:nativeshell_examples/pages/flutter_plugins.dart';
 
 import 'main.dart';
-import 'widgets/button.dart';
-import 'pages/window_management.dart';
 import 'pages/drag_drop.dart';
 import 'pages/file_open_dialog.dart';
 import 'pages/menu.dart';
-import 'widgets/page.dart';
 import 'pages/platform_channels.dart';
+import 'pages/window_management.dart';
+import 'widgets/button.dart';
+import 'widgets/page.dart';
 
-class MainWindowState extends WindowState {
+class MainWindowState extends nshell.WindowState {
   @override
   Widget build(BuildContext context) {
     return ExamplesWindow(child: MainWindow());
   }
 
   @override
-  WindowSizingMode get windowSizingMode =>
-      WindowSizingMode.atLeastIntrinsicSize;
+  nshell.WindowSizingMode get windowSizingMode =>
+      nshell.WindowSizingMode.atLeastIntrinsicSize;
 
   @override
   Future<void> initializeWindow(Size intrinsicContentSize) async {
     if (Platform.isMacOS) {
-      await Menu(_buildMenu).setAsAppMenu();
+      await nshell.Menu(_buildMenu).setAsAppMenu();
     }
     await window.setTitle('NativeShell Examples');
     return super.initializeWindow(intrinsicContentSize);
@@ -38,18 +35,22 @@ class MainWindowState extends WindowState {
 
 // This will be the default "fallback" app menu used for any window that doesn't
 // have other menu
-List<MenuItem> _buildMenu() => [
-      MenuItem.children(title: 'App', children: [
-        MenuItem.withRole(role: MenuItemRole.hide),
-        MenuItem.withRole(role: MenuItemRole.hideOtherApplications),
-        MenuItem.withRole(role: MenuItemRole.showAll),
-        MenuItem.separator(),
-        MenuItem.withRole(role: MenuItemRole.quitApplication),
+List<nshell.MenuItem> _buildMenu() => [
+      nshell.MenuItem.children(title: 'App', children: [
+        nshell.MenuItem.withRole(role: nshell.MenuItemRole.hide),
+        nshell.MenuItem.withRole(
+            role: nshell.MenuItemRole.hideOtherApplications),
+        nshell.MenuItem.withRole(role: nshell.MenuItemRole.showAll),
+        nshell.MenuItem.separator(),
+        nshell.MenuItem.withRole(role: nshell.MenuItemRole.quitApplication),
       ]),
-      MenuItem.children(title: 'Window', role: MenuRole.window, children: [
-        MenuItem.withRole(role: MenuItemRole.minimizeWindow),
-        MenuItem.withRole(role: MenuItemRole.zoomWindow),
-      ]),
+      nshell.MenuItem.children(
+          title: 'Window',
+          role: nshell.MenuRole.window,
+          children: [
+            nshell.MenuItem.withRole(role: nshell.MenuItemRole.minimizeWindow),
+            nshell.MenuItem.withRole(role: nshell.MenuItemRole.zoomWindow),
+          ]),
     ];
 
 class Page {

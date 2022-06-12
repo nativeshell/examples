@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:nativeshell/accelerators.dart';
-import 'package:nativeshell/nativeshell.dart';
+import 'package:nativeshell/nativeshell.dart' as nshell;
 
 import '../widgets/page.dart';
 
@@ -35,7 +35,7 @@ class _MenuPageState extends State<MenuPage> {
                   color: Colors.purple.withOpacity(0.15)),
               child: Column(
                 children: [
-                  MenuBar(
+                  nshell.MenuBar(
                     menu: menu,
                     itemBuilder: _buildMenuBarItem,
                   ),
@@ -74,7 +74,7 @@ class _MenuPageState extends State<MenuPage> {
   int _counter = 0;
 
   void _showContextMenu(TapDownDetails e) async {
-    final menu = Menu(_buildContextMenu);
+    final menu = nshell.Menu(_buildContextMenu);
 
     // Show the Loading... item every time context menu is displayed
     _lazyMenuLoaded = false;
@@ -85,7 +85,7 @@ class _MenuPageState extends State<MenuPage> {
       menu.update();
     });
 
-    await Window.of(context).showPopupMenu(menu, e.globalPosition);
+    await nshell.Window.of(context).showPopupMenu(menu, e.globalPosition);
 
     timer.cancel();
   }
@@ -94,18 +94,18 @@ class _MenuPageState extends State<MenuPage> {
   // Context Menu
   //
 
-  late Menu _lazyMenu; // created in initState, used in _buildContextMenu
+  late nshell.Menu _lazyMenu; // created in initState, used in _buildContextMenu
   bool _lazyMenuLoaded = false;
 
-  List<MenuItem> _buildLazyMenuItems() => !_lazyMenuLoaded
+  List<nshell.MenuItem> _buildLazyMenuItems() => !_lazyMenuLoaded
       ? [
-          MenuItem(title: 'Loading...', action: null),
+          nshell.MenuItem(title: 'Loading...', action: null),
         ]
       : [
-          MenuItem(title: 'Menu items can be', action: () {}),
-          MenuItem(title: 'loaded on demand.', action: () {}),
-          MenuItem.separator(),
-          MenuItem(title: 'Counter $_counter', action: null),
+          nshell.MenuItem(title: 'Menu items can be', action: () {}),
+          nshell.MenuItem(title: 'loaded on demand.', action: () {}),
+          nshell.MenuItem.separator(),
+          nshell.MenuItem(title: 'Counter $_counter', action: null),
         ];
 
   void _onLazyMenuOpen() async {
@@ -114,18 +114,18 @@ class _MenuPageState extends State<MenuPage> {
     _lazyMenu.update();
   }
 
-  List<MenuItem> _buildContextMenu() => [
-        MenuItem(title: 'A Context Menu Item', action: () {}),
-        MenuItem(title: 'Update Counter $_counter', action: null),
-        MenuItem.separator(),
+  List<nshell.MenuItem> _buildContextMenu() => [
+        nshell.MenuItem(title: 'A Context Menu Item', action: () {}),
+        nshell.MenuItem(title: 'Update Counter $_counter', action: null),
+        nshell.MenuItem.separator(),
         ..._buildCheckAndRadioItems(),
-        MenuItem.separator(),
-        MenuItem.children(title: 'Submenu', children: [
-          MenuItem(title: 'Submenu Item 1', action: () {}),
-          MenuItem(title: 'Submenu Item 2', action: () {}),
+        nshell.MenuItem.separator(),
+        nshell.MenuItem.children(title: 'Submenu', children: [
+          nshell.MenuItem(title: 'Submenu Item 1', action: () {}),
+          nshell.MenuItem(title: 'Submenu Item 2', action: () {}),
         ]),
-        MenuItem.separator(),
-        MenuItem.menu(title: 'Lazy Loaded Submenu', submenu: _lazyMenu),
+        nshell.MenuItem.separator(),
+        nshell.MenuItem.menu(title: 'Lazy Loaded Submenu', submenu: _lazyMenu),
       ];
 
   //
@@ -133,23 +133,23 @@ class _MenuPageState extends State<MenuPage> {
   //
 
   Widget _buildMenuBarItem(
-      BuildContext context, Widget child, MenuItemState itemState) {
+      BuildContext context, Widget child, nshell.MenuItemState itemState) {
     Color background;
     Color foreground;
     switch (itemState) {
-      case MenuItemState.regular:
+      case nshell.MenuItemState.regular:
         background = Colors.transparent;
         foreground = Colors.grey.shade800;
         break;
-      case MenuItemState.hovered:
+      case nshell.MenuItemState.hovered:
         background = Colors.purple.withOpacity(0.2);
         foreground = Colors.grey.shade800;
         break;
-      case MenuItemState.selected:
+      case nshell.MenuItemState.selected:
         background = Colors.purple.withOpacity(0.8);
         foreground = Colors.white;
         break;
-      case MenuItemState.disabled:
+      case nshell.MenuItemState.disabled:
         background = Colors.transparent;
         foreground = Colors.grey.shade800.withOpacity(0.5);
         break;
@@ -164,17 +164,17 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  late Menu menu;
+  late nshell.Menu menu;
 
   @override
   void initState() {
     super.initState();
 
     // MenuBar menu
-    menu = Menu(_buildMenu);
+    menu = nshell.Menu(_buildMenu);
 
     // Lazily loaded sub-menu used in context menu
-    _lazyMenu = Menu(_buildLazyMenuItems, onOpen: _onLazyMenuOpen);
+    _lazyMenu = nshell.Menu(_buildLazyMenuItems, onOpen: _onLazyMenuOpen);
   }
 
   bool check1 = true;
@@ -182,88 +182,107 @@ class _MenuPageState extends State<MenuPage> {
   int radioValue = 0;
 
   // MenuBar items
-  List<MenuItem> _buildMenu() => [
+  List<nshell.MenuItem> _buildMenu() => [
         if (Platform.isMacOS)
-          MenuItem.children(title: 'App', children: [
-            MenuItem.withRole(role: MenuItemRole.hide),
-            MenuItem.withRole(role: MenuItemRole.hideOtherApplications),
-            MenuItem.withRole(role: MenuItemRole.showAll),
-            MenuItem.separator(),
-            MenuItem.withRole(role: MenuItemRole.quitApplication),
+          nshell.MenuItem.children(title: 'App', children: [
+            nshell.MenuItem.withRole(role: nshell.MenuItemRole.hide),
+            nshell.MenuItem.withRole(
+                role: nshell.MenuItemRole.hideOtherApplications),
+            nshell.MenuItem.withRole(role: nshell.MenuItemRole.showAll),
+            nshell.MenuItem.separator(),
+            nshell.MenuItem.withRole(role: nshell.MenuItemRole.quitApplication),
           ]),
-        MenuItem.children(title: '&File', children: [
-          MenuItem(title: 'New', accelerator: cmdOrCtrl + 'n', action: () {}),
-          MenuItem(title: 'Open', accelerator: cmdOrCtrl + 'o', action: () {}),
-          MenuItem.separator(),
-          MenuItem(title: 'Save', accelerator: cmdOrCtrl + 's', action: null),
-          MenuItem(title: 'Save As', action: null),
-          MenuItem.separator(),
-          MenuItem(title: 'Close', action: () {}),
+        nshell.MenuItem.children(title: '&File', children: [
+          nshell.MenuItem(
+              title: 'New', accelerator: cmdOrCtrl + 'n', action: () {}),
+          nshell.MenuItem(
+              title: 'Open', accelerator: cmdOrCtrl + 'o', action: () {}),
+          nshell.MenuItem.separator(),
+          nshell.MenuItem(
+              title: 'Save', accelerator: cmdOrCtrl + 's', action: null),
+          nshell.MenuItem(title: 'Save As', action: null),
+          nshell.MenuItem.separator(),
+          nshell.MenuItem(title: 'Close', action: () {}),
         ]),
-        MenuItem.children(title: '&Edit', children: [
-          MenuItem(title: 'Cut', accelerator: cmdOrCtrl + 'x', action: () {}),
-          MenuItem(title: 'Copy', accelerator: cmdOrCtrl + 'c', action: () {}),
-          MenuItem(title: 'Paste', accelerator: cmdOrCtrl + 'v', action: () {}),
-          MenuItem.separator(),
-          MenuItem(title: 'Find', accelerator: cmdOrCtrl + 'f', action: () {}),
-          MenuItem(title: 'Replace', action: () {}),
+        nshell.MenuItem.children(title: '&Edit', children: [
+          nshell.MenuItem(
+              title: 'Cut', accelerator: cmdOrCtrl + 'x', action: () {}),
+          nshell.MenuItem(
+              title: 'Copy', accelerator: cmdOrCtrl + 'c', action: () {}),
+          nshell.MenuItem(
+              title: 'Paste', accelerator: cmdOrCtrl + 'v', action: () {}),
+          nshell.MenuItem.separator(),
+          nshell.MenuItem(
+              title: 'Find', accelerator: cmdOrCtrl + 'f', action: () {}),
+          nshell.MenuItem(title: 'Replace', action: () {}),
         ]),
-        MenuItem.children(title: 'Another Menu', children: [
+        nshell.MenuItem.children(title: 'Another Menu', children: [
           ..._buildCheckAndRadioItems(),
-          MenuItem.separator(),
-          MenuItem.children(title: 'Submenu', children: [
-            MenuItem(title: 'More of the same, I guess?', action: null),
-            MenuItem.separator(),
+          nshell.MenuItem.separator(),
+          nshell.MenuItem.children(title: 'Submenu', children: [
+            nshell.MenuItem(title: 'More of the same, I guess?', action: null),
+            nshell.MenuItem.separator(),
             ..._buildCheckAndRadioItems(),
           ]),
         ]),
         if (Platform.isMacOS)
-          MenuItem.children(title: 'Window', role: MenuRole.window, children: [
-            MenuItem.withRole(role: MenuItemRole.minimizeWindow),
-            MenuItem.withRole(role: MenuItemRole.zoomWindow),
-          ]),
-        MenuItem.children(title: '&Help', children: [
-          MenuItem(title: 'About', action: () {}),
+          nshell.MenuItem.children(
+              title: 'Window',
+              role: nshell.MenuRole.window,
+              children: [
+                nshell.MenuItem.withRole(
+                    role: nshell.MenuItemRole.minimizeWindow),
+                nshell.MenuItem.withRole(role: nshell.MenuItemRole.zoomWindow),
+              ]),
+        nshell.MenuItem.children(title: '&Help', children: [
+          nshell.MenuItem(title: 'About', action: () {}),
         ]),
       ];
 
   // Used in both MenuBar and ContextMenu
-  List<MenuItem> _buildCheckAndRadioItems() => [
-        MenuItem(
+  List<nshell.MenuItem> _buildCheckAndRadioItems() => [
+        nshell.MenuItem(
             title: 'Checkable Item 1',
-            checkStatus: check1 ? CheckStatus.checkOn : CheckStatus.checkOff,
+            checkStatus: check1
+                ? nshell.CheckStatus.checkOn
+                : nshell.CheckStatus.checkOff,
             action: () {
               check1 = !check1;
               menu.update();
             }),
-        MenuItem(
+        nshell.MenuItem(
             title: 'Checkable Item 2',
-            checkStatus: check2 ? CheckStatus.checkOn : CheckStatus.checkOff,
+            checkStatus: check2
+                ? nshell.CheckStatus.checkOn
+                : nshell.CheckStatus.checkOff,
             action: () {
               check2 = !check2;
               menu.update();
             }),
-        MenuItem.separator(),
-        MenuItem(
+        nshell.MenuItem.separator(),
+        nshell.MenuItem(
             title: 'Radio Item 1',
-            checkStatus:
-                radioValue == 0 ? CheckStatus.radioOn : CheckStatus.radioOff,
+            checkStatus: radioValue == 0
+                ? nshell.CheckStatus.radioOn
+                : nshell.CheckStatus.radioOff,
             action: () {
               radioValue = 0;
               menu.update();
             }),
-        MenuItem(
+        nshell.MenuItem(
             title: 'Radio Item 2',
-            checkStatus:
-                radioValue == 1 ? CheckStatus.radioOn : CheckStatus.radioOff,
+            checkStatus: radioValue == 1
+                ? nshell.CheckStatus.radioOn
+                : nshell.CheckStatus.radioOff,
             action: () {
               radioValue = 1;
               menu.update();
             }),
-        MenuItem(
+        nshell.MenuItem(
             title: 'Radio Item 3',
-            checkStatus:
-                radioValue == 2 ? CheckStatus.radioOn : CheckStatus.radioOff,
+            checkStatus: radioValue == 2
+                ? nshell.CheckStatus.radioOn
+                : nshell.CheckStatus.radioOff,
             action: () {
               radioValue = 2;
               menu.update();
