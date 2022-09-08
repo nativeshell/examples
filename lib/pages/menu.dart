@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:nativeshell/accelerators.dart';
 import 'package:nativeshell/nativeshell.dart';
 
