@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nativeshell/nativeshell.dart';
 import 'package:nativeshell_examples/widgets/button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';

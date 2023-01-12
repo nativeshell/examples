@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart';
 import '../widgets/page.dart';
 

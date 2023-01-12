@@ -8,10 +8,10 @@ edition = "2018"
 
 [build-dependencies]
 cargo-emit = "0.2.1"
-nativeshell_build = { version = "0.1.13" }
+nativeshell_build = { version = "0.1.16" }
 
 [dependencies]
-nativeshell = { version = "0.1.13" }
+nativeshell = { version = "0.1.16" }
 env_logger = "0.9.0"
 serde = { version = "1.0.119", features = ["derive"] }
 

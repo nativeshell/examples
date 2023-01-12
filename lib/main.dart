@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// ignore_for_file: undefined_hidden_name, // not in main
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:nativeshell/nativeshell.dart';
 
 import 'pages/other_window.dart';

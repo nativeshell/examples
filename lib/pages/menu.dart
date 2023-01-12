@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+// ignore: undefined_hidden_name, // not in main
+import 'package:flutter/material.dart' hide MenuBar, MenuItem;
 import 'package:nativeshell/accelerators.dart';
 import 'package:nativeshell/nativeshell.dart';
 

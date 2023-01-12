@@ -835,9 +835,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell"
-version = "0.1.13"
+version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7acfcff53e8d22afe5dd06e6a89f242106f05befb551b740bf3b192a09b6a69d"
+checksum = "8b718ebe83a2bf593f1ce0499fec1fb4037b47fceebb3dd34cd757201e0c7b14"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -884,9 +884,9 @@ dependencies = [
 
 [[package]]
 name = "nativeshell_build"
-version = "0.1.13"
+version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1dc23acb90b77e4b82910aa5b7058279697d396295be45d04679fb138b18e915"
+checksum = "0467f3145c92a425a940615ae4d1af716e5a47381061bec01fae28df2f62cd7d"
 dependencies = [
  "base64",
  "cargo-emit",
